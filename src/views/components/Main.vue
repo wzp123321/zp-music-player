@@ -9,6 +9,8 @@
         <slot name="rightSide" />
       </div>
     </div>
+    <!-- 音乐播放器 -->
+    <MusicPlayer></MusicPlayer>
   </div>
 </template>
 <script lang="ts">
@@ -16,11 +18,13 @@ import { Vue, Component } from 'vue-property-decorator'
 
 // 子组件
 import Header from './Header.vue'
+import MusicPlayer from './MusicPlayer.vue'
 
 @Component({
   name: 'Main',
   components: {
-    Header
+    Header,
+    MusicPlayer
   }
 })
 export default class Main extends Vue {}
