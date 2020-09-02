@@ -1,17 +1,24 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/>
-  </div>
+  <Main>
+    <LeftSide slot="leftSide" />
+    <RightSide slot="rightSide" />
+  </Main>
 </template>
 
 <script lang="ts">
+// 引入子组件
+import Main from './components/Main.vue'
+import LeftSide from './components/LeftSide.vue'
+import RightSide from './components/RightSide.vue'
+
 import { Component, Vue } from 'vue-property-decorator'
-import HelloWorld from '@/components/HelloWorld.vue' // @ is an alias to /src
 
 @Component({
+  name: 'Home',
   components: {
-    HelloWorld
+    Main,
+    LeftSide,
+    RightSide
   }
 })
 export default class Home extends Vue {}

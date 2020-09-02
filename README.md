@@ -1,24 +1,11 @@
-# zp_musicplayer
+#### 模仿网易云音乐开发
 
-## Project setup
-```
-npm install
-```
+#### 接口地址---https://node.zpwan-yz.com
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+#### api文档---https://binaryify.github.io/NeteaseCloudMusicApi/#/
 
-### Compiles and minifies for production
-```
-npm run build
-```
+#### 模仿ui---https://ssh-music.vercel.app/#/discovery
 
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+# 技术栈
+Vue.js
+Element-ui
