@@ -7,6 +7,7 @@ import store from './store'
 // 引入公共样式
 import 'Assets/common/flex.less'
 import 'Assets/common/common.css'
+import 'Assets/common/flexible.ts'
 
 import { elementRegister } from 'Plugins/elementRegister'
 
