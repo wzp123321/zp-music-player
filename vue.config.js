@@ -31,7 +31,8 @@ const moduleConfig = {
       .set("Plugins", path.join(__dirname, "src/plugins"))
       .set("Stores", path.join(__dirname, "src/stores"))
       .set("Utils", path.join(__dirname, "src/utils"))
-      .set("Views", path.join(__dirname, "src/views"));
+      .set("Views", path.join(__dirname, "src/views"))
+      .set("Style", path.join(__dirname, "src/style"));
   },
 }
 module.exports = moduleConfig

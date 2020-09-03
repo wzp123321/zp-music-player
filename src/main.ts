@@ -5,9 +5,10 @@ import router from './router'
 import store from './store'
 
 // 引入公共样式
-import 'Assets/common/flex.less'
-import 'Assets/common/common.css'
-import 'Assets/common/flexible.ts'
+import 'Style/flex.less'
+import 'Style/common.css'
+import 'Style/flexible.ts'
+import 'Style/iconfont.css'
 
 import { elementRegister } from 'Plugins/elementRegister'
 
