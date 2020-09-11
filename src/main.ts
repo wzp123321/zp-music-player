@@ -11,11 +11,13 @@ import 'Style/flexible.ts'
 import 'Style/iconfont.css'
 
 import { elementRegister } from 'Plugins/elementRegister'
+import { vueInjecter } from 'Plugins/injecter'
 
 // * ----------------------------------------
 // * 组件注册
 // * ----------------------------------------
 elementRegister()
+Vue.use(vueInjecter)
 
 Vue.config.productionTip = false
 

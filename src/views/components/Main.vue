@@ -31,7 +31,7 @@ export default class Main extends Vue {}
   .header-content,
   .foot-content {
     width: 100%;
-    height: 2rem;
+    height: auto;
   }
   &-content {
     flex: 1;
