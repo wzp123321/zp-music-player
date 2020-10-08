@@ -6,7 +6,7 @@ import { BASE_URL, GLOBAL_DELAY } from '@/common/config'
 // 创建axios实例
 const axiosInstance = () => {
   const instance = axios.create({
-    baseURL: BASE_URL + 'blogManage/',
+    baseURL: BASE_URL,
     timeout: GLOBAL_DELAY
   })
   return instance
@@ -71,10 +71,6 @@ export async function req(
       timeoutfn(delay, params.url),
       publicReq(params)
     ])
-    if (response.data.code === 401) {
-      localStorage.removeItem('blog_token')
-      location.href = '/'
-    }
     return response
   } catch (error) {
     throw new Error(error)

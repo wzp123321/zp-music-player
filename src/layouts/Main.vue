@@ -47,9 +47,11 @@ export default class Main extends Vue {}
   &-content {
     flex: 1;
     .left-content {
-      width: 200px;
+      width: 280px;
+      height: 100%;
     }
     .right-content {
+      height: 100%;
       flex: 1;
     }
   }

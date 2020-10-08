@@ -1,9 +1,9 @@
 <template>
   <div class="z-Dashboard">
     <!-- banner -->
-    <el-carousel :interval="4000" type="card" height="200px">
-      <el-carousel-item v-for="item in 6" :key="item">
-        <h3 class="medium">{{ item }}</h3>
+    <el-carousel :interval="4000" type="card" height="320px">
+      <el-carousel-item v-for="(bannerItem,bannerIndex) in bannerList" :key="'banner_'+bannerIndex">
+        <img :src="bannerItem.imageUrl" alt="" />
       </el-carousel-item>
     </el-carousel>
   </div>
@@ -19,13 +19,26 @@ import { DashboardApi } from '@/service/modules/index'
   components: {}
 })
 export default class Dashboard extends Vue {
+  // banner列表
+  private bannerList: DashboardModule.BannerInfo[] = []
   // 获取banner
   private async getBannerList() {
     const res = await DashboardApi.getDashboardBannerList({ type: 0 })
-    if (res) {
-      console.log(res)
+    if (res && res.code === 200) {
+      this.bannerList = res.banners
     }
+  }
+
+  mounted() {
+    this.$nextTick(() => {
+      this.getBannerList()
+    })
   }
 }
 </script>
-<style lang="less" scoped></style>
+<style lang="less" scoped>
+.z-Dashboard {
+  position: relative;
+  margin: 0 36px;
+}
+</style>

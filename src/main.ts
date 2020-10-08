@@ -7,8 +7,8 @@ import store from './store'
 // 引入公共样式
 import 'Style/flex.less'
 import 'Style/common.css'
-import 'Style/flexible.ts'
 import 'Style/iconfont.css'
+import 'Assets/ts/rem.ts'
 
 import { elementRegister } from '@/plugins/elementRegister'
 import { vueInjecter } from '@/plugins/injecter'
