@@ -10,8 +10,8 @@ import 'Style/common.css'
 import 'Style/flexible.ts'
 import 'Style/iconfont.css'
 
-import { elementRegister } from 'Plugins/elementRegister'
-import { vueInjecter } from 'Plugins/injecter'
+import { elementRegister } from '@/plugins/elementRegister'
+import { vueInjecter } from '@/plugins/injecter'
 
 // * ----------------------------------------
 // * 组件注册
