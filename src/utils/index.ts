@@ -81,7 +81,6 @@ export function audioPlay(
   }
 
   audioPlayer = new Audio(url)
-
   // 播放
   audioPlayer.onloadeddata = () => {
     audioPlayer.play()
@@ -105,7 +104,8 @@ export function audioPlay(
   }
 
   // 进度更新
-  audioPlayer.ontimeupdate = () => {
-    timeUpdateFn && timeUpdateFn()
+  audioPlayer.ontimeupdate = (e: any) => {
+    timeUpdateFn && timeUpdateFn(e)
   }
+  return audioPlayer
 }

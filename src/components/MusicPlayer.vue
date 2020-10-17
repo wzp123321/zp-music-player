@@ -1,14 +1,12 @@
 <template>
   <div class="music-player flex-row-justify-end">
-    <!-- audio实例 -->
-    <audio ref="audio" src></audio>
-
+    <audio :src="src" ref="audio" @timeupdate="onTimeUpdate"></audio>
     <!-- 进度条 -->
     <el-slider
       class="music-player-progress"
       v-model="progress"
       :min="0"
-      :max="total"
+      :max="100"
     ></el-slider>
 
     <!-- 歌曲信息 -->
@@ -19,7 +17,7 @@
       />
       <div class="info">
         <div>测试音乐</div>
-        <div>00:00/01:00</div>
+        <div>00:00/{{ formatDuration(duration) }}</div>
       </div>
     </div>
 
@@ -45,7 +43,6 @@ import { Vue, Component, Watch } from 'vue-property-decorator'
   name: 'MusicPlayer'
 })
 export default class MusicPlayer extends Vue {
-  private musicInfo = {}
   // 是否在播放
   private playing = false
   // 音量*100
@@ -54,34 +51,53 @@ export default class MusicPlayer extends Vue {
   private volume = 0
   // 进度
   private progress = 0
+  // 进度时间
+  private timestamp = 0
   // 歌曲总时长
-  private total = 0
-  // audio实例
-  get audioPlayer() {
-    return this.$refs.audio
-  }
-
-  // 播放
-  pause() {
-    this.playing = false
+  private duration = 0
+  // 格式化
+  formatDuration(time: number) {
+    return (this as any).$formatDuration(time)
   }
   // 暂停
+  pause() {
+    if (this.audioPlayer) {
+      ;(this.audioPlayer as any).pause()
+    }
+    this.playing = false
+  }
+  // 播放
   play() {
     this.playing = true
+    if (this.audioPlayer) {
+      ;(this.audioPlayer as any).play()
+    }
   }
-  // 监听歌曲实例变化
-  @Watch('musicInfo')
-  handleMusicInfoChange() {
-    console.log(111)
+  // 更新时间
+  onTimeUpdate(e: any) {
+    this.timestamp = e.timeStamp
+    this.progress = Math.ceil((100 * this.timestamp) / this.duration / 1000)
   }
-
+  // 初始化
+  get src() {
+    return this.$store.state.music.src
+  }
+  get audioPlayer() {
+    this.duration = Math.ceil((this.$refs.audio as any).duration)
+    return this.$refs.audio
+  }
+  mounted() {
+    this.timestamp = 0
+    this.progress = 0
+    this.duration = 0
+  }
 }
 </script>
 <style lang="less" scoped>
 .music-player {
   position: relative;
   height: 3rem;
-  padding: 0.3rem 0.4rem;
+  padding: 1.3rem 0.4rem 0.3rem 0.4rem;
   align-items: center;
   &-progress {
     position: absolute;
@@ -93,12 +109,13 @@ export default class MusicPlayer extends Vue {
       background-color: #ededed;
       .el-slider__button {
         width: 0.3rem;
-        height: 0.3rem;
+        height: 0.4rem;
         position: relative;
-        top: -0.1rem;
+        top: -1px;
         border-color: #ff272c;
       }
       .el-slider__bar {
+        bottom: -3px;
         background-color: #ff272c;
       }
     }
@@ -159,7 +176,7 @@ export default class MusicPlayer extends Vue {
     .iconfont {
       font-size: 1.1rem;
       position: relative;
-      top: 0.3rem;
+      top: 0.5rem;
     }
   }
 }
