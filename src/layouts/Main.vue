@@ -33,7 +33,16 @@ import MusicPlayer from '@/components/MusicPlayer.vue'
     MusicPlayer
   }
 })
-export default class Main extends Vue {}
+export default class Main extends Vue {
+  mounted() {
+    console.log(this.$store)
+    this.$store.dispatch('/music/setCurrentMusicList', [
+      { src: '/assets/11111111.mps' }
+    ])
+
+    this.$store.dispatch('/music/setCurrentSrc', 0)
+  }
+}
 </script>
 <style lang="less" scoped>
 .music-container {

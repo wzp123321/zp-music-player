@@ -49,7 +49,7 @@ export default class Header extends Vue {
 </script>
 <style lang="less" scoped>
 .music-header {
-  padding: 0.6rem 1rem;
+  padding: 10px 16px;
   border-bottom: 1px solid #ededed;
   .title {
     color: #ff272c;

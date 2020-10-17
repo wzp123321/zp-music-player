@@ -39,6 +39,6 @@ export default class Dashboard extends Vue {
 <style lang="less" scoped>
 .z-Dashboard {
   position: relative;
-  margin: 0 36px;
+  margin: 12px 36px;
 }
 </style>

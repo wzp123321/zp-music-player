@@ -8,7 +8,7 @@ const moduleConfig = {
   outputDir: "zpMusicPlayer",
   productionSourceMap: false,
   devServer: {
-    port: "9999"
+    port: "8080"
   },
   publicPath: '/',
   configureWebpack: config => {
