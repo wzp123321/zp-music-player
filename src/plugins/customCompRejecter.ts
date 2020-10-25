@@ -1,0 +1,17 @@
+/**
+ * 自定义组件
+ */
+import Vue from 'vue'
+
+const files = require.context('../components', true, /index\.js$/)
+const modules: any = {}
+files.keys().forEach(key => {
+  modules[key.replace(/(\.\/|\.js)/g, '')] = files(key).default
+})
+// 自定义组件注册
+export function customRegister() {
+  Object.entries(modules).forEach((arr: any) => {
+    console.log(arr[1])
+    Vue.use(arr[1])
+  })
+}

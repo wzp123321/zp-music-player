@@ -12,12 +12,14 @@ import 'Assets/ts/rem.ts'
 
 import { elementRegister } from '@/plugins/elementRegister'
 import { vueInjecter } from '@/plugins/injecter'
+import { customRegister } from '@/plugins/customCompRejecter'
 
 // * ----------------------------------------
 // * 组件注册
 // * ----------------------------------------
 elementRegister()
 Vue.use(vueInjecter)
+customRegister()
 
 Vue.config.productionTip = false
 

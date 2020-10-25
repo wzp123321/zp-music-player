@@ -1,4 +1,4 @@
-/// <reference path="./typings/dashboard.d.ts" />
+/// <reference path="./typings/music.d.ts" />
 
 declare module '*.vue' {
   import Vue from 'vue'
