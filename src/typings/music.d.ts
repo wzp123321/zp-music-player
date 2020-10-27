@@ -23,27 +23,33 @@ declare namespace MusicModule {
     trackNumberUpdateTime: number
     type: number
   }
-  // 歌曲
+  // 音乐
   interface MusicInfo {
+    alg: string
+    song: SongInfo
+    canDislike: boolean
+    copywriter: string
+    id: number
+    name: string
+    picUrl: string
+    type: number
+  }
+  // 歌曲
+  interface SongInfo {
     artists: ArtistInfo[]
+    copyright: number
     copyrightId: number
     dayPlays: number
-    disc: string
     duration: number
-    exclusive: boolean
-    fee: number
-    ftype: number
-    hearTime: number
     id: number
-    mp3Url: string
     name: string
     playedNum: number
     popularity: number
     position: number
     ringtone: string
-    rtUrl: string
-    rtUrls: string
+    rtype: number
     score: number
+    starred: boolean
     starredNum: number
     status: number
   }
@@ -52,6 +58,7 @@ declare namespace MusicModule {
     albumSize: number
     briefDesc: string
     followed: boolean
+    name: string
     id: number
     img1v1Id: number
     img1v1Id_str: string
@@ -61,5 +68,22 @@ declare namespace MusicModule {
     picUrl: string
     topicPerson: number
     trans: string
+  }
+  // mv
+  interface MvInfo {
+    alg: string
+    artistId: number
+    artistName: string
+    artists: ArtistInfo[]
+    canDislike: boolean
+    copywriter: string
+    duration: number
+    id: number
+    name: string
+    picUrl: string
+    playCount: number
+    subed: boolean
+    trackNumberUpdateTime: number
+    type: number
   }
 }

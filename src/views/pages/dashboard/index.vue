@@ -19,6 +19,17 @@
       >
       </zp-playlist-item>
     </div>
+    <!-- 最近歌曲 -->
+    <zp-module title="最近歌曲"></zp-module>
+    <div v-if="recentMusicList.length > 0" class="m-Dashboard-playlist">
+      <zp-recent-music
+        v-for="(playItem, playIndex) in recentMusicList"
+        :key="playIndex"
+        :index="playIndex"
+        :recentMusicInfo="playItem"
+      >
+      </zp-recent-music>
+    </div>
   </div>
 </template>
 <script lang="ts">
@@ -33,28 +44,51 @@ import { DashboardApi, MusicApi } from '@/service/modules/index'
 })
 export default class Dashboard extends Vue {
   // banner列表
-  private bannerList: DashboardModule.BannerInfo[] = []
+  private bannerList: MusicModule.BannerInfo[] = []
   // 推荐歌单
-  private recommendPlayList: DashboardModule.PlayListInfo[] = []
+  private recommendPlayList: MusicModule.PlayListInfo[] = []
+  // 最近歌曲
+  private recentMusicList: MusicModule.MusicInfo[] = []
+  // 推荐mv
+  private recommendMvList: MusicModule.MvInfo[] = []
   // 获取banner
   private async getBannerList() {
-    const res = await DashboardApi.getDashboardBannerList({ type: 0 })
-    if (res) {
-      this.bannerList = res.banners
+    try {
+      const res = await DashboardApi.getDashboardBannerList({ type: 0 })
+      if (res) {
+        this.bannerList = res.banners
+      }
+    } catch (error) {
+      throw new Error(error)
     }
   }
   // 获取推荐歌单
   async getRecommendPlayList() {
-    const res = await MusicApi.getRecommendPlayList({})
-    if (res) {
-      this.recommendPlayList = res.result
+    try {
+      const res = await MusicApi.getRecommendPlayList({})
+      if (res) {
+        this.recommendPlayList = res.result
+      }
+    } catch (error) {
+      throw new Error(error)
     }
   }
   // 获取最新音乐
   async getRecentMusicList() {
-    const res = await MusicApi.getRecentMusicList({ limit: 10 })
+    try {
+      const res = await MusicApi.getRecentMusicList({ limit: 10 })
+      if (res) {
+        this.recentMusicList = res.result
+      }
+    } catch (error) {
+      throw new Error(error)
+    }
+  }
+  // 获取推荐mv
+  async getRecommendMvList() {
+    const res = await MusicApi.getRecommendMvList({})
     if (res) {
-      console.log(res)
+      this.recommendMvList = res.result
     }
   }
 
@@ -63,6 +97,7 @@ export default class Dashboard extends Vue {
       this.getBannerList()
       this.getRecommendPlayList()
       this.getRecentMusicList()
+      this.getRecommendMvList()
     })
   }
 }

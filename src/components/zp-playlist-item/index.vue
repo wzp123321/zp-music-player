@@ -31,33 +31,35 @@ export default class PlaylistItem extends Vue {
   cursor: pointer;
   position: relative;
   overflow: hidden;
-  margin-right: 24px;
+  margin-right: 32px;
   margin-bottom: 24px;
+  width: 272px;
   .tag {
     width: 100%;
-    text-align: center;
     position: absolute;
-    top: -40px;
+    top: -60px;
     left: 0;
     font-size: 12px;
-    padding: 12px 0;
+    padding: 12px 4px;
+    text-align: left;
     background-color: rgba(0, 0, 0, 0.7);
     color: #fff;
     transition: all 300ms;
   }
   img {
-    width: 220px;
-    height: 180px;
+    width: 100%;
+    height: 200px;
     border-radius: 4px;
   }
   .description {
+    width: 100%;
     text-align: left;
     font-size: 14px;
     padding: 6px 0;
   }
   .icon-bofang1 {
     position: absolute;
-    bottom: 42px;
+    top: 160px;
     right: 8px;
     text-align: right;
     opacity: 0;
@@ -76,7 +78,7 @@ export default class PlaylistItem extends Vue {
     transition: all 500ms;
   }
 }
-.m-Playlist:nth-child(6n) {
+.m-Playlist:nth-child(5n) {
   margin-right: 0;
 }
 </style>
