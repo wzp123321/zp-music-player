@@ -14,6 +14,8 @@
     <div class="foot-content">
       <MusicPlayer></MusicPlayer>
     </div>
+    <!-- mv弹框 -->
+    <zp-mv-dialog ref="mv_dialog" :mvId="mvId" :title="mvName"></zp-mv-dialog>
   </div>
 </template>
 <script lang="ts">
@@ -34,12 +36,24 @@ import MusicPlayer from '@/components/MusicPlayer.vue'
   }
 })
 export default class Main extends Vue {
-  mounted() {
-    this.$store.dispatch('music/setCurrentMusicList', [
-      { src: 'http://m8.music.126.net/20201017153359/ad2f68471bd20389e272cc69d11b94ce/ymusic/0fd6/4f65/43ed/a8772889f38dfcb91c04da915b301617.mp3' }
-    ])
-
-    this.$store.dispatch('music/setCurrentSrc', 0)
+  // mv播放链接
+  private mvId = ''
+  // mv名称
+  private mvName = ''
+  //添加mv播放弹框监听事件
+  onMvDialogShow() {
+    console.log(11121)
+    ;(this as any).bus.$on('mvDialogShow', (id: string, mvName: string) => {
+      this.mvId = id
+      this.mvName = mvName
+      console.log('id', id, mvName)
+      ;(this.$refs.mv_dialog as any).show()
+    })
+  }
+  created() {
+    this.$nextTick(() => {
+      this.onMvDialogShow()
+    })
   }
 }
 </script>

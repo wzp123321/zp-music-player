@@ -3,6 +3,7 @@ import App from './App.vue'
 import './registerServiceWorker'
 import router from './router'
 import store from './store'
+import bus from '@/utils/eventBus'
 
 // 引入公共样式
 import 'Style/flex.less'
@@ -20,7 +21,8 @@ import { customRegister } from '@/plugins/customCompRejecter'
 elementRegister()
 Vue.use(vueInjecter)
 customRegister()
-
+Vue.prototype.$bus = new Vue()
+Vue.prototype.bus = bus
 Vue.config.productionTip = false
 
 new Vue({

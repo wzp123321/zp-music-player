@@ -49,6 +49,22 @@ const MusicApi = {
     } catch (error) {
       throw new Error(error)
     }
+  },
+   /**
+   * 获取推荐mv
+   */
+  async getMvUrlById(params: {
+    id:string
+  }): Promise<CommonModule.Responsive<{[key:string]:string}>> {
+    try {
+      const result: CommonModule.Responsive<{[key:string]:string}> = await getRequest(
+        '/mv/url',
+        params
+      )
+      return result
+    } catch (error) {
+      throw new Error(error)
+    }
   }
 }
 

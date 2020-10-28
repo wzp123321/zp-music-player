@@ -30,6 +30,17 @@
       >
       </zp-recent-music>
     </div>
+    <!-- 最新mv -->
+    <zp-module title="最新mv"></zp-module>
+    <div v-if="recommendMvList.length > 0" class="m-Dashboard-playlist">
+      <zp-mv-item
+        v-for="(playItem, playIndex) in recommendMvList"
+        :key="playIndex"
+        :index="playIndex"
+        :mvInfo="playItem"
+      >
+      </zp-mv-item>
+    </div>
   </div>
 </template>
 <script lang="ts">
@@ -105,7 +116,16 @@ export default class Dashboard extends Vue {
 <style lang="less" scoped>
 .m-Dashboard {
   position: relative;
-  margin: 12px 36px;
+  margin: 24px 36px;
+  ::v-deep .el-carousel {
+    .el-carousel__container {
+      img {
+        width: 100%;
+        height: 100%;
+        border-radius: 6px;
+      }
+    }
+  }
   &-playlist {
     display: flex;
     flex-wrap: wrap;
