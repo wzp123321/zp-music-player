@@ -132,6 +132,7 @@ export default class MusicPlayer extends Vue {
 }
 </script>
 <style lang="less" scoped>
+@import url('../style/common.less');
 .music-player {
   position: relative;
   height: 3rem;
@@ -151,12 +152,12 @@ export default class MusicPlayer extends Vue {
         height: 0.1rem;
         position: relative;
         top: -2px;
-        border-color: #ff272c;
+        border-color: @common-color;
       }
       .el-slider__bar {
         bottom: 0;
         height: 2px;
-        background-color: #ff272c;
+        background-color: @common-color;
       }
     }
   }
@@ -176,7 +177,7 @@ export default class MusicPlayer extends Vue {
   }
   &-btn {
     font-size: 1rem;
-    color: #ff272c;
+    color: @common-color;
     cursor: pointer;
 
     .icon-bofang,
@@ -210,11 +211,11 @@ export default class MusicPlayer extends Vue {
           height: 0.3rem;
           position: relative;
           top: -1px;
-          border-color: #ff272c;
+          border-color: @common-color;
         }
       }
       .el-slider__bar {
-        background-color: #ff272c;
+        background-color: @common-color;
       }
     }
     .iconfont {

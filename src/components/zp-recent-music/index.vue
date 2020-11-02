@@ -43,6 +43,7 @@ export default class RecentMusic extends Vue {
 }
 </script>
 <style lang="less" scoped>
+@import url('../../style/common.less');
 .m-Recent-music {
   position: relative;
   margin-bottom: 24px;
@@ -67,7 +68,7 @@ export default class RecentMusic extends Vue {
     transform: translateY(-50%) scale(1);
     transition: all 300ms;
     font-size: 24px;
-    color: #ff272c;
+    color: @common-color;
   }
   .icon-bofang1:hover {
     transform: translateY(-50%) scale(1.1);

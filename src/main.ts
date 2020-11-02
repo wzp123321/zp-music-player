@@ -6,10 +6,10 @@ import store from './store'
 import bus from '@/utils/eventBus'
 
 // 引入公共样式
-import 'Style/flex.less'
-import 'Style/common.css'
-import 'Style/iconfont.css'
-import 'Assets/ts/rem.ts'
+import '@/style/flex.less'
+import '@/style/common.less'
+import '@/style/iconfont.css'
+import '@/assets/ts/rem.ts'
 
 import { elementRegister } from '@/plugins/elementRegister'
 import { vueInjecter } from '@/plugins/injecter'

@@ -13,15 +13,15 @@ const routes: Array<RouteConfig> = [
     path: '/app',
     name: 'Home',
     component: Home,
-    redirect:'/app/dashboard',
+    redirect:'/app/discovery',
     children: [
       // 首页
       {
-        path: '/app/dashboard',
+        path: '/app/discovery',
         name: 'Dashboard',
         component: () =>
           import(
-            /* webpackChunkName: "music-player-dashboard" */ '@/views/pages/dashboard/index.vue'
+            /* webpackChunkName: "music-player-dashboard" */ '@/views/pages/discover/index.vue'
           )
       },
       // 搜索

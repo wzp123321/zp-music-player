@@ -23,7 +23,7 @@ export default class Header extends Vue {
 
   // 筛选关键字
   querySearchAsync(queryString: string, cb: Function) {
-    (this as any).$debounce(() => {
+    ;(this as any).$debounce(() => {
       const restaurants = this.restaurants
       const results: any = []
       cb(results)
@@ -42,17 +42,19 @@ export default class Header extends Vue {
 
   // 主题修改
   changeTheme(theme: string) {
-    const baseUrl = '/static/style/theme';
-    (this as any).$addCssByLink(`${baseUrl}${theme}css`)
+    const baseUrl = '/static/style/theme'
+    ;(this as any).$addCssByLink(`${baseUrl}${theme}css`)
   }
 }
 </script>
 <style lang="less" scoped>
+@import url('../style/common.less');
+
 .music-header {
   padding: 10px 16px;
   border-bottom: 1px solid #ededed;
   .title {
-    color: #ff272c;
+    color: @common-color;
     cursor: pointer;
     font-weight: bold;
     font-family: 'Courier New', Courier, monospace;

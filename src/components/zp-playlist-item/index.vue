@@ -31,6 +31,8 @@ export default class PlaylistItem extends Vue {
 }
 </script>
 <style lang="less" scoped>
+@import url('../../style/common.less');
+
 .m-Playlist {
   cursor: pointer;
   position: relative;
@@ -64,7 +66,7 @@ export default class PlaylistItem extends Vue {
     opacity: 0;
     transition: all 300ms;
     font-size: 26px;
-    color: #ff272c;
+    color: @common-color;
   }
 }
 .m-Playlist:hover {
