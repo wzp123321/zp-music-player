@@ -1,6 +1,10 @@
 <template>
   <el-dialog :title="title" :visible.sync="dialogVisible" width="40%">
-    <video :src="src"></video>
+    <video
+      :src="src"
+      style="width:100%;height:100%;object-fit: cover"
+      controls
+    ></video>
     <span slot="footer" class="dialog-footer">
       <el-button @click="dialogVisible = false">取 消</el-button>
       <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
@@ -44,4 +48,19 @@ export default class MvDialog extends Vue {
   }
 }
 </script>
-<style lang="less" scoped></style>
+<style lang="less" scoped>
+::v-deep .el-dialog__header {
+  text-align: left;
+  .el-dialog__title {
+    display: inline-block;
+    max-width: 94%;
+    text-align: left;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+::v-deep .el-dialog__body {
+  padding: 12px;
+}
+</style>

@@ -29,7 +29,7 @@ export default class MvItem extends Vue {
   private mvInfo!: MusicModule.MvInfo
   // mv播放
   handleMvPlay() {
-    ;(this as any).bus.$emit('mvDialogShow', this.mvInfo.id, this.mvInfo.name)
+    ;(this as any).bus.$emit('mvDialogShow', this.mvInfo)
   }
 }
 </script>
@@ -51,6 +51,12 @@ export default class MvItem extends Vue {
     .copywriter,
     .name {
       padding: 6px;
+    }
+    .copywriter {
+      max-width: 90%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
   }
   img {

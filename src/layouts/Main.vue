@@ -37,17 +37,18 @@ import MusicPlayer from '@/components/MusicPlayer.vue'
 })
 export default class Main extends Vue {
   // mv播放链接
-  private mvId = ''
+  private mvId = 0
   // mv名称
   private mvName = ''
   //添加mv播放弹框监听事件
   onMvDialogShow() {
-    console.log(11121)
-    ;(this as any).bus.$on('mvDialogShow', (id: string, mvName: string) => {
+    ;(this as any).bus.$on('mvDialogShow', (mvInfo: MusicModule.MvInfo) => {
+      const { id, name } = mvInfo
       this.mvId = id
-      this.mvName = mvName
-      console.log('id', id, mvName)
-      ;(this.$refs.mv_dialog as any).show()
+      this.mvName = name
+      setTimeout(() => {
+        ;(this.$refs.mv_dialog as any).show()
+      }, 300)
     })
   }
   created() {

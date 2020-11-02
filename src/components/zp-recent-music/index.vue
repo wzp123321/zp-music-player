@@ -1,7 +1,11 @@
 <template>
   <div class="m-Recent-music flex-row-start-center">
     <div class="m-Recent-music-index">0{{ index + 1 }}</div>
-    <img :src="recentMusicInfo.picUrl" alt="" />
+    <zp-image-preview
+      :imgUrl="recentMusicInfo.picUrl"
+      :width="80"
+      :height="80"
+    ></zp-image-preview>
     <div class="m-Recent-music-artist">
       <div class="title">
         {{ recentMusicInfo.name }}
@@ -46,12 +50,6 @@ export default class RecentMusic extends Vue {
   &-index {
     margin-right: 10px;
     font-size: 16px;
-  }
-  img {
-    cursor: pointer;
-    width: 80px;
-    height: 80px;
-    border-radius: 4px;
   }
   &-artist {
     width: 160px;

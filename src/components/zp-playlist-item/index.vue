@@ -3,7 +3,11 @@
     <div class="tag">
       {{ playListInfo.copywriter }}
     </div>
-    <img :src="playListInfo.picUrl" alt="" />
+    <zp-image-preview
+      :imgUrl="playListInfo.picUrl"
+      :width="272"
+      :height="200"
+    ></zp-image-preview>
     <div class="description">
       {{ playListInfo.name }}
     </div>
@@ -45,11 +49,6 @@ export default class PlaylistItem extends Vue {
     background-color: rgba(0, 0, 0, 0.7);
     color: #fff;
     transition: all 300ms;
-  }
-  img {
-    width: 100%;
-    height: 200px;
-    border-radius: 4px;
   }
   .description {
     width: 100%;
