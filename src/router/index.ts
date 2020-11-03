@@ -35,7 +35,7 @@ const routes: Array<RouteConfig> = [
       },
       // 歌单详情
       {
-        path: '/app/playListDetail',
+        path: '/app/playlist/Detail',
         name: 'PlayListDetail',
         component: () =>
           import(

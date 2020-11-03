@@ -1,4 +1,6 @@
 /*eslint-disable*/
+import moment from 'moment'
+
 // 动态添加css
 export function addCssByLink(url: string) {
   const link = document.createElement('link')
@@ -108,4 +110,16 @@ export function audioPlay(
     timeUpdateFn && timeUpdateFn(e)
   }
   return audioPlayer
+}
+
+/**
+ * 格式化日期
+ * @param time 日期
+ * @param format 格式
+ */
+export const formatTime = (time: number, format = 'YYYY-MM-DD HH:MM') => {
+  if (!time) {
+    return '-- --'
+  }
+  return moment(time).format(format)
 }

@@ -8,7 +8,8 @@ import {
   formatDuration,
   debounce,
   throttle,
-  audioPlay
+  audioPlay,
+  formatTime
 } from '@/utils/index'
 
 const vueInjecter = {
@@ -18,6 +19,7 @@ const vueInjecter = {
     Vue.prototype.$debounce = debounce // 防抖
     Vue.prototype.$throttle = throttle // 节流
     Vue.prototype.$audioPlay = audioPlay // 音频播放
+    Vue.prototype.$formatTime = formatTime // 格式化时间
   }
 }
 
