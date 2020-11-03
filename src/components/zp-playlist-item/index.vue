@@ -26,7 +26,7 @@ export default class PlaylistItem extends Vue {
   private playListInfo!: MusicModule.PlayListInfo
   // 跳转歌单详情
   getToPlayListInfo() {
-    console.log(111)
+    this.$router.push('/app/playListDetail?id=' + this.playListInfo.id)
   }
 }
 </script>

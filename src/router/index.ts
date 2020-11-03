@@ -13,7 +13,7 @@ const routes: Array<RouteConfig> = [
     path: '/app',
     name: 'Home',
     component: Home,
-    redirect:'/app/discovery',
+    redirect: '/app/discovery',
     children: [
       // 首页
       {
@@ -26,11 +26,20 @@ const routes: Array<RouteConfig> = [
       },
       // 搜索
       {
-        path: 'app/search',
+        path: '/app/search',
         name: 'Search',
         component: () =>
           import(
             /* webpackChunkName: "music-player-dashboard" */ '@/views/pages/search/index.vue'
+          )
+      },
+      // 歌单详情
+      {
+        path: '/app/playListDetail',
+        name: 'PlayListDetail',
+        component: () =>
+          import(
+            /* webpackChunkName: "music-player-dashboard" */ '@/views/pages/playlist-detail/index.vue'
           )
       }
     ]

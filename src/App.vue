@@ -5,6 +5,8 @@
 </template>
 
 <style lang="less">
+@import url('./style/common.less');
+
 #app {
   width: 100%;
   height: 100%;
@@ -12,5 +14,9 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
+}
+
+.el-loading-spinner .path {
+  stroke: @common-color !important;
 }
 </style>

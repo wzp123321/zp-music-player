@@ -23,8 +23,8 @@ export default class MvDialog extends Vue {
   @Prop({ default: '' })
   private title!: string
   // 是否需要按钮
-  @Prop({ default: '' })
-  private mvId!: string
+  @Prop({ default: 0 })
+  private mvId!: number
   // 开关
   private dialogVisible = false
   // 地址
@@ -39,8 +39,7 @@ export default class MvDialog extends Vue {
     this.dialogVisible = false
   }
   // 根据id获取播放地址
-  async getUrlById(id: string) {
-    console.log(id)
+  async getUrlById(id: number) {
     const res = await MusicApi.getMvUrlById({ id })
     if (res) {
       this.src = res.data.url

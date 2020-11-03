@@ -1,12 +1,12 @@
 <template>
-  <div class="playlist-detail"></div>
+  <div class="m-Loading"></div>
 </template>
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'
 
 @Component({
-  name: 'PlayListDetail'
+  name: 'Loading'
 })
-export default class PlayListDetail extends Vue {}
+export default class Loading extends Vue {}
 </script>
 <style lang="less" scoped></style>

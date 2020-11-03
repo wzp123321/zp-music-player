@@ -50,17 +50,31 @@ const MusicApi = {
       throw new Error(error)
     }
   },
-   /**
+  /**
    * 获取推荐mv
    */
   async getMvUrlById(params: {
-    id:string
-  }): Promise<CommonModule.Responsive<{[key:string]:string}>> {
+    id: number
+  }): Promise<CommonModule.Responsive<{ [key: string]: string }>> {
     try {
-      const result: CommonModule.Responsive<{[key:string]:string}> = await getRequest(
-        '/mv/url',
-        params
-      )
+      const result: CommonModule.Responsive<{
+        [key: string]: string
+      }> = await getRequest('/mv/url', params)
+      return result
+    } catch (error) {
+      throw new Error(error)
+    }
+  },
+  /**
+   * 获取推荐mv
+   */
+  async getPlayListDetailById(params: {
+    id: number
+  }): Promise<CommonModule.Responsive<{ [key: string]: string }>> {
+    try {
+      const result: CommonModule.Responsive<{
+        [key: string]: string
+      }> = await getRequest('/playlist/detail', params)
       return result
     } catch (error) {
       throw new Error(error)

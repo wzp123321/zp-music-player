@@ -1,5 +1,5 @@
 <template>
-  <div class="m-Dashboard">
+  <div class="m-Dashboard" v-loading.fullscreen.lock="loading">
     <!-- banner -->
     <el-carousel :interval="4000" type="card" height="320px">
       <el-carousel-item
@@ -54,6 +54,7 @@ import { DashboardApi, MusicApi } from '@/service/modules/index'
   components: {}
 })
 export default class Dashboard extends Vue {
+  private loading = false
   // banner列表
   private bannerList: MusicModule.BannerInfo[] = []
   // 推荐歌单
@@ -104,16 +105,19 @@ export default class Dashboard extends Vue {
   }
 
   mounted() {
-    this.$nextTick(() => {
-      this.getBannerList()
-      this.getRecommendPlayList()
-      this.getRecentMusicList()
-      this.getRecommendMvList()
+    this.$nextTick(async () => {
+      this.loading = true
+      await this.getBannerList()
+      await this.getRecommendPlayList()
+      await this.getRecentMusicList()
+      await this.getRecommendMvList()
+      this.loading = false
     })
   }
 }
 </script>
 <style lang="less" scoped>
+@import url('../../../style/common.less');
 .m-Dashboard {
   position: relative;
   margin: 24px 36px;

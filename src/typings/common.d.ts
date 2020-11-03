@@ -7,6 +7,7 @@ declare namespace CommonModule {
     banners: T
     category: number
     hasTaste: boolean
+    playlist: { [key: string]: value }
   }
   // list返回
   interface ListResponse<T> {
