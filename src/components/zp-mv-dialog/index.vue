@@ -2,6 +2,7 @@
   <el-dialog :title="title" :visible.sync="dialogVisible" width="40%">
     <video
       :src="src"
+      v-if="dialogVisible"
       style="width:100%;height:100%;object-fit: cover"
       controls
     ></video>

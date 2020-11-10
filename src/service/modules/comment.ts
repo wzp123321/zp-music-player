@@ -7,9 +7,10 @@ const CommentApi = {
    */
   async getPlayListCommentListById(params: {
     id: number
-  }): Promise<CommonModule.Responsive<MusicModule.PlayListInfo[]>> {
+    offset: number
+  }): Promise<CommonModule.ListResponse<DataModule.CommentInfo>> {
     try {
-      const result: CommonModule.Responsive<MusicModule.PlayListInfo[]> = await getRequest(
+      const result: CommonModule.ListResponse<DataModule.CommentInfo> = await getRequest(
         '/comment/playlist',
         params
       )

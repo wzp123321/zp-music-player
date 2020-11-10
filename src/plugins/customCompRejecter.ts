@@ -11,7 +11,6 @@ files.keys().forEach(key => {
 // 自定义组件注册
 export function customRegister() {
   Object.entries(modules).forEach((arr: any) => {
-    console.log(arr[1])
     Vue.use(arr[1])
   })
 }

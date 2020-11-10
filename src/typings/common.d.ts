@@ -15,5 +15,6 @@ declare namespace CommonModule {
     data: Array<T>
     total: number
     interactCount: number
+    comments: Array<T>
   }
 }

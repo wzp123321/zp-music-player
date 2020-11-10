@@ -44,6 +44,26 @@
         </div>
       </div>
     </div>
+    <el-tabs v-model="activeName">
+      <el-tab-pane label="歌曲列表" name="first"> </el-tab-pane>
+      <el-tab-pane :label="`评论(${pagination.total})`" name="second">
+        <div v-if="commentList.length > 0">
+          <zp-comment-item
+            v-for="(item, index) in commentList"
+            :key="index"
+            :commentInfo="item"
+          ></zp-comment-item>
+          <p class="load-more" @click="loadMore">
+            {{
+              commentList.length === pagination.total
+                ? '没有更多了！'
+                : '加载更多~'
+            }}
+          </p>
+        </div>
+        <zp-no-data v-else text="还没有评论~"></zp-no-data>
+      </el-tab-pane>
+    </el-tabs>
   </div>
 </template>
 <script lang="ts">
@@ -55,8 +75,15 @@ import { MusicApi, CommentApi } from '@/service/modules/index'
 })
 export default class PlayListDetail extends Vue {
   private loading = false
-
+  private activeName = 'first'
   private playListInfo = {}
+  // 评论列表
+  private commentList: DataModule.CommentInfo[] = []
+  // 评论分页
+  private pagination = {
+    page: 1,
+    total: 0
+  }
   // 格式化时间
   formatTime(time: number) {
     return (this as any).$formatTime(time)
@@ -71,16 +98,29 @@ export default class PlayListDetail extends Vue {
   }
   // 获取评论列表
   async getCommentList() {
-    const { id } = this
+    this.loading = true
+    const { id, pagination } = this
+    const offset = (pagination.page - 1) * 20
     try {
       const res = await CommentApi.getPlayListCommentListById({
         id,
+        offset
       })
       if (res) {
-        console.log(res)
+        this.commentList = [...this.commentList, ...res.comments]
+        this.pagination.total = res.total
+        this.loading = false
       }
     } catch (error) {
+      this.loading = false
       throw new Error(error)
+    }
+  }
+  // 加载更多
+  loadMore() {
+    if (this.pagination.total > this.commentList.length) {
+      this.pagination.page += 1
+      this.getCommentList()
     }
   }
   // 获取详情
@@ -166,6 +206,12 @@ export default class PlayListDetail extends Vue {
         -webkit-box-orient: vertical;
       }
     }
+  }
+  .load-more {
+    cursor: pointer;
+    text-align: center;
+    font-size: 14px;
+    color: #666;
   }
 }
 </style>

@@ -36,7 +36,7 @@ declare namespace MusicModule {
   }
   // 歌曲
   interface SongInfo {
-    artists: ArtistInfo[]
+    artists: UserModule.ArtistInfo[]
     copyright: number
     copyrightId: number
     dayPlays: number
@@ -53,28 +53,12 @@ declare namespace MusicModule {
     starredNum: number
     status: number
   }
-  // 歌手
-  interface ArtistInfo {
-    albumSize: number
-    briefDesc: string
-    followed: boolean
-    name: string
-    id: number
-    img1v1Id: number
-    img1v1Id_str: string
-    img1v1Url: string
-    musicSize: number
-    picId: number
-    picUrl: string
-    topicPerson: number
-    trans: string
-  }
   // mv
   interface MvInfo {
     alg: string
     artistId: number
     artistName: string
-    artists: ArtistInfo[]
+    artists: UserModule.ArtistInfo[]
     canDislike: boolean
     copywriter: string
     duration: number
