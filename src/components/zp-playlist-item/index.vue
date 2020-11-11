@@ -1,10 +1,10 @@
 <template>
   <div class="m-Playlist" @click="getToPlayListInfo">
     <div class="tag">
-      {{ playListInfo.copywriter }}
+      {{ getTag(playListInfo.copywriter || playListInfo.description) }}
     </div>
     <zp-image-preview
-      :imgUrl="playListInfo.picUrl"
+      :imgUrl="playListInfo.picUrl || playListInfo.coverImgUrl"
       :width="272"
       :height="200"
     ></zp-image-preview>
@@ -27,6 +27,9 @@ export default class PlaylistItem extends Vue {
   // 跳转歌单详情
   getToPlayListInfo() {
     this.$router.push('/app/playlist/detail?id=' + this.playListInfo.id)
+  }
+  getTag(title: string) {
+    return title.substring(0, 40)
   }
 }
 </script>

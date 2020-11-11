@@ -1,5 +1,5 @@
 <template>
-  <div class="m-Search">
+  <div class="m-Search" v-loading.fullscreen.lock="loading">
     <el-tabs v-model="type">
       <el-tab-pane label="单曲" name="1">
         <zp-music-table
@@ -10,7 +10,21 @@
       </el-tab-pane>
       <el-tab-pane label="专辑" name="10"> </el-tab-pane>
       <el-tab-pane label="歌手" name="100"> </el-tab-pane>
-      <el-tab-pane label="歌单" name="1000"> </el-tab-pane>
+      <el-tab-pane label="歌单" name="1000">
+        <div class="flex-wrap">
+          <zp-playlist-item
+            v-for="(playItem, playIndex) in playlist"
+            :key="playIndex"
+            :playListInfo="playItem"
+          >
+          </zp-playlist-item>
+        </div>
+        <p class="load-more" @click="loadMore">
+          {{
+            pagination.total === playlist.length ? '没有更多了~' : '加载更多~'
+          }}
+        </p>
+      </el-tab-pane>
       <el-tab-pane label="用户" name="1002"> </el-tab-pane>
       <el-tab-pane label="MV" name="1004">
         <div class="flex-wrap">
@@ -45,6 +59,7 @@ import SearchApi from '@/service/modules/search'
   name: 'Search'
 })
 export default class Search extends Vue {
+  private loading = false
   // 分页
   private pagination = {
     page: 1,
@@ -54,10 +69,13 @@ export default class Search extends Vue {
   private musicList: MusicModule.SongInfo[] = []
   // 视频列表
   private videoList: MusicModule.MvInfo[] = []
+  // 歌单列表
+  private playlist: MusicModule.PlayListInfo[] = []
   // 搜索类型
   private type = '1'
   // 搜索
   async onSearch() {
+    this.loading = true
     const { keywords, pagination } = this
     document.title = keywords
     const type = Number(this.type)
@@ -75,6 +93,10 @@ export default class Search extends Vue {
             this.musicList = res.result.songs
             this.pagination.total = res.result.songCount
             break
+          case 1000:
+            this.playlist = res.result.playlists
+            this.pagination.total = res.result.playlistCount
+            break
           case 1004:
             this.videoList = res.result.mvs
             this.pagination.total = res.result.mvCount
@@ -84,8 +106,10 @@ export default class Search extends Vue {
             this.pagination.total = res.result.videoCount
             break
         }
+        this.loading = false
       }
     } catch (error) {
+      this.loading = false
       console.log(error)
     }
   }
@@ -93,6 +117,13 @@ export default class Search extends Vue {
   handleCurrentChange(page: number) {
     this.pagination.page = page
     this.onSearch()
+  }
+  // 加载更多
+  loadMore(type = 'playlist') {
+    if ((this as any)[type].length < this.pagination.total) {
+      this.pagination.page += 1
+      this.onSearch()
+    }
   }
   // 初始化
   mounted() {
@@ -120,6 +151,12 @@ export default class Search extends Vue {
 </script>
 <style lang="less" scoped>
 .m-Search {
+  .load-more {
+    padding: 12px 0;
+    text-align: center;
+    font-size: 14px;
+    color: #666;
+  }
   ::v-deep .el-tabs {
     .el-tabs__header {
       padding: 1rem;
