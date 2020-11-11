@@ -108,7 +108,6 @@ export default class Dashboard extends Vue {
       this.recommendMvList = res.result
     }
   }
-
   mounted() {
     this.$nextTick(async () => {
       this.loading = true

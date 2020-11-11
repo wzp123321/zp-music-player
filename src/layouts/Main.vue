@@ -4,7 +4,7 @@
       <Header></Header>
     </div>
     <div
-      style="width:100%;padding: 1.8rem 0.4rem;background:#fff"
+      style="padding: 1.8rem 0.4rem;background:#fff"
     ></div>
     <div class="music-container-content flex-row-justify-end">
       <div class="left-content">
@@ -13,7 +13,7 @@
       <div class="right-content">
         <RightSide></RightSide>
         <div
-          style="width:100%;height: 3rem;padding: 0.3rem 0.4rem;background:#fff"
+          style="height: 3rem;padding: 0.3rem 0.4rem;background:#fff"
         ></div>
       </div>
     </div>

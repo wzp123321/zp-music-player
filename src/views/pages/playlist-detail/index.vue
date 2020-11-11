@@ -46,34 +46,7 @@
     </div>
     <el-tabs v-model="activeName">
       <el-tab-pane label="歌曲列表" name="first">
-        <el-table :data="musicList" @row-dblclick="handleRowDbClick">
-          <el-table-column type="index"> </el-table-column>
-          <el-table-column>
-            <template slot-scope="scope">
-              <zp-image-preview
-                :imgUrl="scope.row.al.picUrl"
-                :width="84"
-                :height="84"
-              ></zp-image-preview>
-            </template>
-          </el-table-column>
-          <el-table-column prop="name" label="歌名"> </el-table-column>
-          <el-table-column label="歌手" align="center">
-            <template slot-scope="scope">
-              {{ getArtist(scope.row.ar) }}
-            </template>
-          </el-table-column>
-          <el-table-column label="所属专辑" align="center">
-            <template slot-scope="scope">
-              {{ scope.row.al.name }}
-            </template>
-          </el-table-column>
-          <el-table-column label="时长" align="center">
-            <template slot-scope="scope">
-              {{ formatDuration(scope.row.dt) }}
-            </template>
-          </el-table-column>
-        </el-table>
+        <zp-music-table :musicList="musicList"></zp-music-table>
       </el-tab-pane>
       <el-tab-pane :label="`评论(${pagination.total})`" name="second">
         <div v-if="commentList.length > 0">
@@ -105,7 +78,7 @@ import { PlayListApi, CommentApi, MusicApi } from '@/service/modules/index'
 export default class PlayListDetail extends Vue {
   private loading = false
   private activeName = 'first'
-  private playListInfo = {}
+  private playListInfo: any = {}
   // 评论列表
   private commentList: DataModule.CommentInfo[] = []
   // 评论分页
@@ -115,13 +88,6 @@ export default class PlayListDetail extends Vue {
   }
   // 音乐列表
   private musicList: MusicModule.SongInfo[] = []
-  // 格式化时长
-  formatDuration(time: any) {
-    if (!time) {
-      return '00:00'
-    }
-    return (this as any).$formatDuration(time, 1000)
-  }
   // 格式化时间
   formatTime(time: number) {
     return (this as any).$formatTime(time)
@@ -152,14 +118,6 @@ export default class PlayListDetail extends Vue {
   // 播放全部
   getAllPlayListPlay() {
     this.getMusicPlay(0)
-  }
-  // 双击事件
-  handleRowDbClick(row: any, column: any, event: any) {
-    this.musicList.forEach((item, index) => {
-      if (item.id === row.id) {
-        this.getMusicPlay(index)
-      }
-    })
   }
   // 获取评论列表
   async getCommentList() {
@@ -212,6 +170,7 @@ export default class PlayListDetail extends Vue {
         const idArr = res.playlist.trackIds.map((item: any) => {
           return item.id
         })
+        document.title = this.playListInfo.name
         const ids = idArr.join(',')
         this.getMusicListByTrackIds(ids)
       }
@@ -294,9 +253,6 @@ export default class PlayListDetail extends Vue {
     text-align: center;
     font-size: 14px;
     color: #666;
-  }
-  ::v-deep .el-table {
-    cursor: pointer;
   }
 }
 </style>
