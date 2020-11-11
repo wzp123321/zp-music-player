@@ -70,5 +70,7 @@ declare namespace MusicModule {
     subed: boolean
     trackNumberUpdateTime: number
     type: number
+    vid: string
+    title: string
   }
 }

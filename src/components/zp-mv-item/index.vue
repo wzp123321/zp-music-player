@@ -1,15 +1,16 @@
 <template>
   <div class="m-Mv" @click="handleMvPlay">
-    <img :src="mvInfo.picUrl" alt="" />
+    <img :src="mvInfo.picUrl || mvInfo.coverUrl || mvInfo.cover" alt="" />
     <div class="m-Mv-singer flex-column-justify-end ">
       <div class="name">
-        <span>{{ mvInfo.name }}</span>
+        <span>{{ mvInfo.name || mvInfo.title }}</span>
         /
         <span v-if="mvInfo.artists && mvInfo.artists.length > 0">{{
-          mvInfo.artists[0].name
+          (mvInfo.artists && mvInfo.artists[0].name) ||
+            (mvInfo.creator && mvInfo.creator[0].name)
         }}</span>
       </div>
-      <div class="copywriter">
+      <div class="copywriter" v-if="mvInfo.copywriter">
         {{ mvInfo.copywriter }}
       </div>
     </div>
@@ -29,7 +30,12 @@ export default class MvItem extends Vue {
   private mvInfo!: MusicModule.MvInfo
   // mv播放
   handleMvPlay() {
-    ;(this as any).bus.$emit('mvDialogShow', this.mvInfo)
+    const params = {
+      id: this.mvInfo.id || this.mvInfo.vid,
+      name: this.mvInfo.name || this.mvInfo.title,
+      type: this.mvInfo.id ? 'mv' : this.mvInfo.vid ? 'video' : 'other'
+    }
+    ;(this as any).bus.$emit('mvDialogShow', params)
   }
 }
 </script>
@@ -40,6 +46,7 @@ export default class MvItem extends Vue {
   width: 360px;
   height: 240px;
   margin-right: 32px;
+  margin-bottom: 24px;
   &-singer {
     height: 100%;
     position: absolute;

@@ -3,6 +3,7 @@ declare namespace CommonModule {
   interface Responsive<T> {
     code: number
     data: T
+    urls: T
     result: T
     banners: T
     category: number

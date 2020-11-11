@@ -23,9 +23,12 @@ export default class MvDialog extends Vue {
   // 标题
   @Prop({ default: '' })
   private title!: string
-  // 是否需要按钮
+  // id
   @Prop({ default: 0 })
   private mvId!: number
+  // type
+  @Prop({ default: 'mv' })
+  private mvType!: string
   // 开关
   private dialogVisible = false
   // 地址
@@ -41,9 +44,12 @@ export default class MvDialog extends Vue {
   }
   // 根据id获取播放地址
   async getUrlById(id: number) {
-    const res = await MvModule.getMvUrlById({ id })
+    const res =
+      this.mvType === 'mv'
+        ? await MvModule.getMvUrlById({ id })
+        : await MvModule.getVideoUrlById({ id })
     if (res) {
-      this.src = res.data.url
+      this.src = (res.data && res.data.url) || (res.urls && res.urls[0].url)
     }
   }
 }

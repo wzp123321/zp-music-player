@@ -34,5 +34,21 @@ export default {
     } catch (error) {
       throw new Error(error)
     }
+  },
+  /**
+   * 根据id获取mv播放地址
+   */
+  async getVideoUrlById(params: {
+    id: number
+  }): Promise<CommonModule.Responsive<any>> {
+    try {
+      const result: CommonModule.Responsive<any> = await getRequest(
+        '/video/url',
+        params
+      )
+      return result
+    } catch (error) {
+      throw new Error(error)
+    }
   }
 }

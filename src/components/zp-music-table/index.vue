@@ -47,7 +47,7 @@
     </el-table>
     <el-pagination
       v-if="pagination.total > 10"
-      style="text-align:right;margin-top:20px"
+      style="text-align:right;margin:20px 0"
       @current-change="handleCurrentChange"
       :current-page="pagination.page"
       background

@@ -12,10 +12,28 @@
       <el-tab-pane label="歌手" name="100"> </el-tab-pane>
       <el-tab-pane label="歌单" name="1000"> </el-tab-pane>
       <el-tab-pane label="用户" name="1002"> </el-tab-pane>
-      <el-tab-pane label="MV" name="1004"> </el-tab-pane>
+      <el-tab-pane label="MV" name="1004">
+        <div class="flex-wrap">
+          <zp-mv-item
+            v-for="(playItem, playIndex) in videoList"
+            :key="playIndex"
+            :index="playIndex"
+            :mvInfo="playItem"
+          ></zp-mv-item>
+        </div>
+      </el-tab-pane>
       <el-tab-pane label="歌词" name="1006"> </el-tab-pane>
       <el-tab-pane label="电台" name="1009"> </el-tab-pane>
-      <el-tab-pane label="视频" name="1014"> </el-tab-pane>
+      <el-tab-pane label="视频" name="1014">
+        <div class="flex-wrap">
+          <zp-mv-item
+            v-for="(playItem, playIndex) in videoList"
+            :key="playIndex"
+            :index="playIndex"
+            :mvInfo="playItem"
+          ></zp-mv-item>
+        </div>
+      </el-tab-pane>
       <el-tab-pane label="综合" name="1018"> </el-tab-pane>
     </el-tabs>
   </div>
@@ -34,6 +52,8 @@ export default class Search extends Vue {
   }
   // 音乐列表
   private musicList: MusicModule.SongInfo[] = []
+  // 视频列表
+  private videoList: MusicModule.MvInfo[] = []
   // 搜索类型
   private type = '1'
   // 搜索
@@ -49,10 +69,20 @@ export default class Search extends Vue {
         type
       })
       if (res) {
+        console.log(res)
         switch (type) {
           case 1:
             this.musicList = res.result.songs
             this.pagination.total = res.result.songCount
+            break
+          case 1004:
+            this.videoList = res.result.mvs
+            this.pagination.total = res.result.mvCount
+            break
+          case 1014:
+            this.videoList = res.result.videos
+            this.pagination.total = res.result.videoCount
+            break
         }
       }
     } catch (error) {
