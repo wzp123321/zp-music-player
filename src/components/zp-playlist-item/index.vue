@@ -1,5 +1,5 @@
 <template>
-  <div class="m-Playlist">
+  <div class="m-Playlist" @click="getToPlayListInfo">
     <div class="tag">
       {{ playListInfo.copywriter }}
     </div>
@@ -11,7 +11,7 @@
     <div class="description">
       {{ playListInfo.name }}
     </div>
-    <i class="iconfont icon-bofang1" @click="getToPlayListInfo"></i>
+    <i class="iconfont icon-bofang1"></i>
   </div>
 </template>
 <script lang="ts">

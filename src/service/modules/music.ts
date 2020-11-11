@@ -2,23 +2,6 @@ import { getRequest, postRequest } from '@/service/request'
 
 const MusicApi = {
   /**
-   * 获取推荐歌单
-   * @param params limit
-   */
-  async getRecommendPlayList(params: {
-    limit?: number
-  }): Promise<CommonModule.Responsive<MusicModule.PlayListInfo[]>> {
-    try {
-      const result: CommonModule.Responsive<MusicModule.PlayListInfo[]> = await getRequest(
-        '/personalized',
-        params
-      )
-      return result
-    } catch (error) {
-      throw new Error(error)
-    }
-  },
-  /**
    * 获取最新歌曲
    */
   async getRecentMusicList(params: {}): Promise<
@@ -35,14 +18,14 @@ const MusicApi = {
     }
   },
   /**
-   * 获取推荐mv
+   *根据ids获取歌曲详情
    */
-  async getRecommendMvList(params: {
-    limit?: number
-  }): Promise<CommonModule.Responsive<MusicModule.MvInfo[]>> {
+  async getMusicDetailByIds(params: {
+    ids: string
+  }): Promise<CommonModule.Responsive<MusicModule.SongInfo[]>> {
     try {
-      const result: CommonModule.Responsive<MusicModule.MvInfo[]> = await getRequest(
-        '/personalized/mv',
+      const result: CommonModule.Responsive<MusicModule.SongInfo[]> = await getRequest(
+        '/song/detail',
         params
       )
       return result
@@ -51,30 +34,16 @@ const MusicApi = {
     }
   },
   /**
-   * 获取推荐mv
+   *根据ids获取歌曲url
    */
-  async getMvUrlById(params: {
-    id: number
-  }): Promise<CommonModule.Responsive<{ [key: string]: string }>> {
+  async getMusicUrlById(params: {
+    id: string
+  }): Promise<CommonModule.Responsive<MusicModule.SongInfo[]>> {
     try {
-      const result: CommonModule.Responsive<{
-        [key: string]: string
-      }> = await getRequest('/mv/url', params)
-      return result
-    } catch (error) {
-      throw new Error(error)
-    }
-  },
-  /**
-   * 获取推荐mv
-   */
-  async getPlayListDetailById(params: {
-    id: number
-  }): Promise<CommonModule.Responsive<{ [key: string]: string }>> {
-    try {
-      const result: CommonModule.Responsive<{
-        [key: string]: string
-      }> = await getRequest('/playlist/detail', params)
+      const result: CommonModule.Responsive<MusicModule.SongInfo[]> = await getRequest(
+        '/song/url',
+        params
+      )
       return result
     } catch (error) {
       throw new Error(error)

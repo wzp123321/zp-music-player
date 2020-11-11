@@ -47,7 +47,12 @@
 import { Vue, Component } from 'vue-property-decorator'
 
 // 引入api
-import { DashboardApi, MusicApi } from '@/service/modules/index'
+import {
+  DashboardApi,
+  MusicApi,
+  PlayListApi,
+  MvApi
+} from '@/service/modules/index'
 
 @Component({
   name: 'Dashboard',
@@ -77,7 +82,7 @@ export default class Dashboard extends Vue {
   // 获取推荐歌单
   async getRecommendPlayList() {
     try {
-      const res = await MusicApi.getRecommendPlayList({})
+      const res = await PlayListApi.getRecommendPlayList({})
       if (res) {
         this.recommendPlayList = res.result
       }
@@ -98,7 +103,7 @@ export default class Dashboard extends Vue {
   }
   // 获取推荐mv
   async getRecommendMvList() {
-    const res = await MusicApi.getRecommendMvList({})
+    const res = await MvApi.getRecommendMvList({})
     if (res) {
       this.recommendMvList = res.result
     }

@@ -3,41 +3,41 @@
     <audio
       :src="src"
       ref="audio"
+      autoplay
       @timeupdate="onTimeUpdate"
       @loadeddata="onLoad"
+      @ended="onEnd"
     ></audio>
     <!-- 进度条 -->
     <el-slider
       :min="0"
-      :max="100"
+      :max="duration"
       v-model="progress"
       :show-tooltip="false"
       class="music-player-progress"
       @change="handleProgressChange"
-      @mousedown="onMouseDown"
-      @mouseup="onMouseUp"
+      @mousedown.native="onMouseDown"
+      @mouseup.native="onMouseUp"
     ></el-slider>
 
     <!-- 歌曲信息 -->
     <div class="music-player-avatar flex">
-      <img
-        src="https://zpwan-yz.com/upload/57CF44A16721D41471806BED925093D7.png"
-        alt
-      />
+      <img v-if="musicInfo.picUrl" :src="musicInfo.picUrl" alt />
       <div class="info">
-        <div>测试音乐</div>
-        <div>
-          {{ formatDuration(timestamp) }}/{{ formatDuration(duration) }}
+        <div>{{ musicInfo.name || '' }}</div>
+        <div>{{ musicInfo.artist || '' }}</div>
+        <div v-if="duration">
+          {{ formatDuration(progress) }}/{{ formatDuration(duration) }}
         </div>
       </div>
     </div>
 
     <!-- 按钮 -->
     <div class="music-player-btn">
-      <i class="iconfont icon-shangyishou"></i>
+      <i class="iconfont icon-shangyishou" @click="preview"></i>
       <i v-show="playing" class="iconfont icon-bofang" @click="pause"></i>
       <i v-show="!playing" class="iconfont icon-bofang1" @click="play"></i>
-      <i class="iconfont icon-xiayishou"></i>
+      <i class="iconfont icon-xiayishou" @click="next"></i>
     </div>
 
     <!-- 音量 -->
@@ -49,21 +49,20 @@
 </template>
 <script lang="ts">
 import { Vue, Component, Watch } from 'vue-property-decorator'
+import { MusicApi } from '@/service/modules/index'
 
 @Component({
   name: 'MusicPlayer'
 })
 export default class MusicPlayer extends Vue {
+  // 播放链接
+  private src = ''
   // 是否在播放
   private playing = false
   // 音量*100
-  private volumeSlide = 0
-  // 音量
-  private volume = 0
+  private volumeSlide = 50
   // 进度
   private progress = 0
-  // 进度时间
-  private timestamp = 0
   // 歌曲总时长
   private duration = 0
   // 是否处于拖动进度条状态
@@ -82,16 +81,14 @@ export default class MusicPlayer extends Vue {
   }
   // 修改进度
   handleProgressChange(value: number) {
-    if (this.isDrag) {
-      this.progress = value
-      this.timestamp = Math.ceil(this.duration * (this.progress / 100))
-      ;(this.audioPlayer as any).timeStamp = this.timestamp
-    }
+    this.isDrag = false
+    this.progress = value
+    this.audioPlayer.currentTime = value
   }
   // 暂停
   pause() {
     if (this.audioPlayer) {
-      ;(this.audioPlayer as any).pause()
+      this.audioPlayer.pause()
     }
     this.playing = false
   }
@@ -99,33 +96,70 @@ export default class MusicPlayer extends Vue {
   play() {
     this.playing = true
     if (this.audioPlayer) {
-      ;(this.audioPlayer as any).play()
+      this.audioPlayer.play()
     }
+  }
+  // 上一首
+  preview() {
+    let index = this.$store.state.music.musicIndex
+    const musicList = this.$store.state.music.musicList
+    index =
+      index - 1 < 0 ? this.$store.state.music.musicList.length - 1 : index - 1
+    this.$store.dispatch('music/setCurrentMusicIndex', index)
+  }
+  // 下一首
+  next() {
+    let index = this.$store.state.music.musicIndex
+    const musicList = this.$store.state.music.musicList
+    index = index + 1 > this.$store.state.music.musicList.length ? 0 : index + 1
+    this.$store.dispatch('music/setCurrentMusicIndex', index)
   }
   // 更新时间
   onTimeUpdate(e: any) {
     if (this.audioPlayer && !this.isDrag) {
-      this.timestamp = this.duration === 0 ? 0 : Math.ceil(e.timeStamp / 1000)
-      this.progress =
-        this.duration === 0
-          ? 0
-          : Math.ceil((100 * this.timestamp) / this.duration)
+      this.progress = this.audioPlayer.currentTime
     }
   }
   // 加载完成
   onLoad() {
-    this.duration = Math.ceil((this.$refs.audio as any).duration)
+    this.duration = Math.floor(this.audioPlayer.duration)
   }
-  // 链接
-  get src() {
-    return this.$store.state.music.src
+  // 播放结束
+  onEnd() {
+    this.next()
+  }
+  // 获取歌曲
+  get musicInfo() {
+    return this.$store.state.music.musicInfo
   }
   // audio实例
-  get audioPlayer() {
-    return this.$refs.audio
+  get audioPlayer(): HTMLAudioElement {
+    return this.$refs.audio as HTMLAudioElement
+  }
+  // 监听musicinfo变化
+  @Watch('musicInfo')
+  async handleMusicInfoChange(
+    newVal: { id: string; name: string; picUrl: string },
+    oldVal: { id: string; name: string; picUrl: string }
+  ) {
+    try {
+      const res = await MusicApi.getMusicUrlById({ id: newVal.id })
+      if (res && res.data) {
+        this.src = res.data[0].url
+        this.playing = true
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  // 监听音量变化
+  @Watch('volumeSlide')
+  handleVolumeSlideChange(newVal: number, oldVal: number) {
+    if (this.audioPlayer) {
+      this.audioPlayer.volume = Number((newVal / 100).toFixed(1))
+    }
   }
   mounted() {
-    this.timestamp = 0
     this.progress = 0
     this.duration = 0
   }
@@ -140,13 +174,15 @@ export default class MusicPlayer extends Vue {
   align-items: center;
   &-progress {
     position: absolute;
-    top: -0.9rem;
+    top: -1.2rem;
     left: 0;
     width: 100%;
     ::v-deep .el-slider__runway {
+      .el-slider__button-wrapper {
+        top: -0.9875rem;
+      }
       height: 0.1rem;
       background-color: #ededed;
-      margin: 0.5rem 0;
       .el-slider__button {
         width: 0.1rem;
         height: 0.1rem;
@@ -206,6 +242,7 @@ export default class MusicPlayer extends Vue {
         height: 4px;
       }
       .el-slider__button-wrapper {
+        top: -0.8875rem;
         .el-slider__button {
           width: 0.3rem;
           height: 0.3rem;

@@ -1,25 +1,38 @@
 import { Module } from 'vuex'
 
 interface MusicState {
-  src: string
+  musicInfo: { id: string; picUrl: string; name: string; artist: string }
   musicIndex: number
-  musicList: any[]
+  musicList: { id: string; picUrl: string; name: string; artist: string }[]
 }
 
 const Music: Module<MusicState, {}> = {
   namespaced: true,
   state: {
-    src: '',
+    musicInfo: {
+      id: '',
+      name: '',
+      artist: '',
+      picUrl: ''
+    },
     musicIndex: 0,
     musicList: []
   },
   mutations: {
     // 设置当前正在播放的音乐地址
-    setCurrentSrc(state: MusicState, data: number) {
+    setCurrentMusicIndex(state: MusicState, data: number) {
       // 存入缓存
       window.localStorage.setItem('zpwan_music_index', data + '')
       state.musicIndex = data
-      state.src = state.musicList.length === 0 ? '' : state.musicList[data].src
+      state.musicInfo =
+        state.musicList.length === 0
+          ? {
+              id: '',
+              name: '',
+              picUrl: '',
+              artist: ''
+            }
+          : state.musicList[data]
     },
     // 设置当前音乐列表
     setCurrentMusicList(state: MusicState, data: any[]) {
@@ -30,8 +43,8 @@ const Music: Module<MusicState, {}> = {
   },
   actions: {
     // 设置当前正在播放的音乐地址
-    async setCurrentSrc({ commit }, data: number) {
-      return commit('setCurrentSrc', data)
+    async setCurrentMusicIndex({ commit }, data: number) {
+      return commit('setCurrentMusicIndex', data)
     },
     // 设置当前音乐列表
     async setCurrentMusicList({ commit }, data: any[]) {
@@ -39,17 +52,17 @@ const Music: Module<MusicState, {}> = {
     }
   },
   getters: {
-    src(state: MusicState) {
+    musicInfo(state: MusicState) {
       const musicIndex = Number(
         window.localStorage.getItem('zpwan_music_index') || '0'
       )
-      const src =
+      const musicInfo =
         state.musicList.length === 0
-          ? ''
+          ? {}
           : !musicIndex
-          ? state.musicList[0].src
-          : state.musicList[musicIndex].src
-      return src
+          ? state.musicList[0]
+          : state.musicList[musicIndex]
+      return musicInfo
     },
     /**
      * 获取音乐列表

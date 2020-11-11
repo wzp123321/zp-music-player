@@ -45,7 +45,36 @@
       </div>
     </div>
     <el-tabs v-model="activeName">
-      <el-tab-pane label="歌曲列表" name="first"> </el-tab-pane>
+      <el-tab-pane label="歌曲列表" name="first">
+        <el-table :data="musicList" @row-dblclick="handleRowDbClick">
+          <el-table-column type="index"> </el-table-column>
+          <el-table-column>
+            <template slot-scope="scope">
+              <zp-image-preview
+                :imgUrl="scope.row.al.picUrl"
+                :width="84"
+                :height="84"
+              ></zp-image-preview>
+            </template>
+          </el-table-column>
+          <el-table-column prop="name" label="歌名"> </el-table-column>
+          <el-table-column label="歌手" align="center">
+            <template slot-scope="scope">
+              {{ getArtist(scope.row.ar) }}
+            </template>
+          </el-table-column>
+          <el-table-column label="所属专辑" align="center">
+            <template slot-scope="scope">
+              {{ scope.row.al.name }}
+            </template>
+          </el-table-column>
+          <el-table-column label="时长" align="center">
+            <template slot-scope="scope">
+              {{ formatDuration(scope.row.dt) }}
+            </template>
+          </el-table-column>
+        </el-table>
+      </el-tab-pane>
       <el-tab-pane :label="`评论(${pagination.total})`" name="second">
         <div v-if="commentList.length > 0">
           <zp-comment-item
@@ -56,7 +85,7 @@
           <p class="load-more" @click="loadMore">
             {{
               commentList.length === pagination.total
-                ? '没有更多了！'
+                ? '没有更多了~'
                 : '加载更多~'
             }}
           </p>
@@ -68,7 +97,7 @@
 </template>
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'
-import { MusicApi, CommentApi } from '@/service/modules/index'
+import { PlayListApi, CommentApi, MusicApi } from '@/service/modules/index'
 
 @Component({
   name: 'PlayListDetail'
@@ -84,17 +113,53 @@ export default class PlayListDetail extends Vue {
     page: 1,
     total: 0
   }
+  // 音乐列表
+  private musicList: MusicModule.SongInfo[] = []
+  // 格式化时长
+  formatDuration(time: any) {
+    if (!time) {
+      return '00:00'
+    }
+    return (this as any).$formatDuration(time, 1000)
+  }
   // 格式化时间
   formatTime(time: number) {
     return (this as any).$formatTime(time)
+  }
+  getArtist(list: any) {
+    const names = list.map((item: any) => {
+      return item.name
+    })
+    return names.join('/')
   }
   // 处理标签
   getTag(list: string[]) {
     return list.length > 0 ? list.join(' ') : ''
   }
+  // 播放
+  getMusicPlay(index: number) {
+    const list = this.musicList.map((item: any) => {
+      return {
+        name: item.name,
+        picUrl: item.al.picUrl,
+        artist: this.getArtist(item.ar),
+        id: item.id
+      }
+    })
+    this.$store.dispatch('music/setCurrentMusicList', list)
+    this.$store.dispatch('music/setCurrentMusicIndex', index)
+  }
   // 播放全部
   getAllPlayListPlay() {
-    console.log(1)
+    this.getMusicPlay(0)
+  }
+  // 双击事件
+  handleRowDbClick(row: any, column: any, event: any) {
+    this.musicList.forEach((item, index) => {
+      if (item.id === row.id) {
+        this.getMusicPlay(index)
+      }
+    })
   }
   // 获取评论列表
   async getCommentList() {
@@ -123,15 +188,32 @@ export default class PlayListDetail extends Vue {
       this.getCommentList()
     }
   }
-  // 获取详情
+  // 获取歌单中歌曲列表详情
+  async getMusicListByTrackIds(ids: string) {
+    try {
+      const res = await MusicApi.getMusicDetailByIds({ ids })
+      if (res) {
+        this.musicList = res.songs
+        this.loading = false
+      }
+    } catch (error) {
+      this.loading = false
+      console.log(error)
+    }
+  }
+  // 获取歌单详情
   async getPlayListDetailById() {
     this.loading = true
     const { id } = this
     try {
-      const res = await MusicApi.getPlayListDetailById({ id })
+      const res = await PlayListApi.getPlayListDetailById({ id })
       if (res) {
         this.playListInfo = res.playlist
-        this.loading = false
+        const idArr = res.playlist.trackIds.map((item: any) => {
+          return item.id
+        })
+        const ids = idArr.join(',')
+        this.getMusicListByTrackIds(ids)
       }
     } catch (error) {
       this.loading = false
@@ -212,6 +294,9 @@ export default class PlayListDetail extends Vue {
     text-align: center;
     font-size: 14px;
     color: #666;
+  }
+  ::v-deep .el-table {
+    cursor: pointer;
   }
 }
 </style>

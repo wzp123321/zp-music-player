@@ -1,4 +1,5 @@
 /*eslint-disable*/
+import { min } from 'lodash'
 import moment from 'moment'
 
 // 动态添加css
@@ -20,20 +21,16 @@ export function addCssByLink(url: string) {
  * 格式化音乐时长
  * @param time 时长
  */
-export const formatDuration = (time: number) => {
+export const formatDuration = (time: number, unit = 1) => {
   if (!time) {
     return '00:00'
   }
-  var minutes = Math.floor(time / 60)
-  var seconds = time - minutes * 60
-
+  var minutes = Math.floor(time / 60 / unit)
+  var seconds = Math.floor((time - minutes * 60 * unit) / unit)
   return (
-    (minutes > 0 ? minutes + ':' : '0:') +
-    (seconds > 0
-      ? Math.floor(seconds) < 10
-        ? '0' + Math.floor(seconds)
-        : Math.floor(seconds)
-      : '00')
+    (minutes > 9 ? minutes : '0' + minutes) +
+    ':' +
+    (seconds > 9 ? seconds : '0' + seconds)
   )
 }
 

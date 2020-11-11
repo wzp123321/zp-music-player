@@ -8,6 +8,7 @@ declare namespace CommonModule {
     category: number
     hasTaste: boolean
     playlist: { [key: string]: value }
+    songs: T
   }
   // list返回
   interface ListResponse<T> {

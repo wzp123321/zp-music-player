@@ -1,7 +1,8 @@
 <template>
   <div class="music-header flex-row-justify-center">
     <div class="title">zpwan@music.com</div>
-    <div class="search">
+    <div class="search flex-row-justify-center">
+      <i class="iconfont icon-fanhui" @click="goBack"></i>
       <el-autocomplete
         v-model="state"
         :fetch-suggestions="querySearchAsync"
@@ -36,6 +37,11 @@ export default class Header extends Vue {
     }
   }
 
+  // 返回
+  goBack() {
+    this.$router.back()
+  }
+
   handleSelect(item: { value: string }) {
     console.log(item)
   }
@@ -55,9 +61,18 @@ export default class Header extends Vue {
   border-bottom: 1px solid #ededed;
   .title {
     color: @common-color;
+    text-align: left;
+    width: 15rem;
     cursor: pointer;
     font-weight: bold;
     font-family: 'Courier New', Courier, monospace;
+  }
+  .search {
+    flex: 1;
+    .iconfont {
+      cursor: pointer;
+      font-size: 1.2rem;
+    }
   }
 }
 </style>

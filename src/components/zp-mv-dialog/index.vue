@@ -14,7 +14,7 @@
 </template>
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
-import MusicApi from '@/service/modules/music'
+import MvModule from '@/service/modules/mv'
 
 @Component({
   name: 'MvDialog'
@@ -41,7 +41,7 @@ export default class MvDialog extends Vue {
   }
   // 根据id获取播放地址
   async getUrlById(id: number) {
-    const res = await MusicApi.getMvUrlById({ id })
+    const res = await MvModule.getMvUrlById({ id })
     if (res) {
       this.src = res.data.url
     }

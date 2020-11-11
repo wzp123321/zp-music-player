@@ -52,6 +52,7 @@ declare namespace MusicModule {
     starred: boolean
     starredNum: number
     status: number
+    url: string
   }
   // mv
   interface MvInfo {

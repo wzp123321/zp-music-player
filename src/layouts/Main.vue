@@ -3,12 +3,18 @@
     <div class="header-content">
       <Header></Header>
     </div>
+    <div
+      style="width:100%;padding: 1.8rem 0.4rem;background:#fff"
+    ></div>
     <div class="music-container-content flex-row-justify-end">
       <div class="left-content">
         <LeftSide></LeftSide>
       </div>
       <div class="right-content">
         <RightSide></RightSide>
+        <div
+          style="width:100%;height: 3rem;padding: 0.3rem 0.4rem;background:#fff"
+        ></div>
       </div>
     </div>
     <div class="foot-content">
@@ -60,12 +66,26 @@ export default class Main extends Vue {
 </script>
 <style lang="less" scoped>
 .music-container {
+  position: relative;
   width: 100%;
   height: 100%;
   .header-content,
   .foot-content {
     width: 100%;
     height: auto;
+    z-index: 999;
+  }
+  .header-content {
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: #fff;
+  }
+  .foot-content {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    background: #fff;
   }
   &-content {
     flex: 1;
