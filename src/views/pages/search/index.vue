@@ -23,7 +23,21 @@
           }}
         </p>
       </el-tab-pane>
-      <el-tab-pane label="歌手" name="100"> </el-tab-pane>
+      <el-tab-pane label="歌手" name="100">
+        <div class="flex-wrap">
+          <zp-artist-item
+            v-for="(playItem, playIndex) in artistList"
+            :key="playIndex"
+            :index="playIndex"
+            :artistInfo="playItem"
+          ></zp-artist-item>
+        </div>
+        <p class="load-more" @click="loadMore('artistList')">
+          {{
+            pagination.total === artistList.length ? '没有更多了~' : '加载更多~'
+          }}
+        </p>
+      </el-tab-pane>
       <el-tab-pane label="歌单" name="1000">
         <div class="flex-wrap">
           <zp-playlist-item
@@ -49,6 +63,11 @@
             :mvInfo="playItem"
           ></zp-mv-item>
         </div>
+        <p class="load-more" @click="loadMore('videoList')">
+          {{
+            pagination.total === videoList.length ? '没有更多了~' : '加载更多~'
+          }}
+        </p>
       </el-tab-pane>
       <el-tab-pane label="歌词" name="1006"> </el-tab-pane>
       <el-tab-pane label="电台" name="1009"> </el-tab-pane>
@@ -61,6 +80,11 @@
             :mvInfo="playItem"
           ></zp-mv-item>
         </div>
+        <p class="load-more" @click="loadMore('videoList')">
+          {{
+            pagination.total === videoList.length ? '没有更多了~' : '加载更多~'
+          }}
+        </p>
       </el-tab-pane>
       <el-tab-pane label="综合" name="1018"> </el-tab-pane>
     </el-tabs>
@@ -87,6 +111,8 @@ export default class Search extends Vue {
   private playlist: MusicModule.PlayListInfo[] = []
   // 专辑列表
   private albumList: MusicModule.AlbumInfo[] = []
+  // 歌手列表
+  private artistList: UserModule.ArtistInfo[] = []
   // 搜索类型
   private type = '1'
   // 搜索
@@ -112,6 +138,10 @@ export default class Search extends Vue {
           case 10:
             this.albumList = [...this.albumList, ...res.result.albums]
             this.pagination.total = res.result.albumCount
+            break
+          case 100:
+            this.artistList = [...this.artistList, ...res.result.artists]
+            this.pagination.total = res.result.artistCount
             break
           case 1000:
             this.playlist = [...this.playlist, ...res.result.playlists]
@@ -139,7 +169,7 @@ export default class Search extends Vue {
     this.onSearch()
   }
   // 加载更多
-  loadMore(type = 'playlist' || 'albumList') {
+  loadMore(type = 'playlist' || 'albumList' || 'videoList') {
     if ((this as any)[type].length < this.pagination.total) {
       this.pagination.page += 1
       this.onSearch()

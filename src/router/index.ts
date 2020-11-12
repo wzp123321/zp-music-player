@@ -30,7 +30,7 @@ const routes: Array<RouteConfig> = [
         name: 'Search',
         component: () =>
           import(
-            /* webpackChunkName: "music-player-dashboard" */ '@/views/pages/search/index.vue'
+            /* webpackChunkName: "music-player-search" */ '@/views/pages/search/index.vue'
           )
       },
       // 歌单详情
@@ -39,16 +39,25 @@ const routes: Array<RouteConfig> = [
         name: 'PlayListDetail',
         component: () =>
           import(
-            /* webpackChunkName: "music-player-dashboard" */ '@/views/pages/detail/playlist-detail.vue'
+            /* webpackChunkName: "music-playlist-detail" */ '@/views/pages/detail/playlist-detail.vue'
           )
       },
-       // 详情
-       {
+      // 专辑详情
+      {
         path: '/app/album/detail',
         name: 'AlbumDetail',
         component: () =>
           import(
-            /* webpackChunkName: "music-player-dashboard" */ '@/views/pages/detail/album-detail.vue'
+            /* webpackChunkName: "music-album-detail" */ '@/views/pages/detail/album-detail.vue'
+          )
+      },
+      // 歌手详情
+      {
+        path: '/app/artist/detail',
+        name: 'AatistDetail',
+        component: () =>
+          import(
+            /* webpackChunkName: "music-artist-detail" */ '@/views/pages/detail/artist-detail.vue'
           )
       }
     ]

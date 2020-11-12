@@ -3,7 +3,8 @@
     class="image-preview"
     :style="{
       width: width + 'px',
-      height: height + 'px'
+      height: height + 'px',
+      borderRadius: borderRadius
     }"
   >
     <img
@@ -31,13 +32,15 @@ export default class ImagePreview extends Vue {
 
   @Prop({ default: 96 })
   private height!: number
+
+  @Prop({ default: '8px' })
+  private borderRadius!: string
 }
 </script>
 <style lang="less" scoped>
 .image-preview {
   cursor: pointer;
   background-color: #eee;
-  border-radius: 8px;
   border: 1px solid #ededed;
   overflow: hidden;
   img {
