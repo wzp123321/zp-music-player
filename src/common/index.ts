@@ -16,12 +16,12 @@ export const menuList = [
   },
   {
     title: '歌手',
-    path: '/app/singer',
+    path: '/app/artist',
     icon: 'icon-yinle'
   },
   {
     title: '最新mv',
-    path: '/app/new',
+    path: '/app/mv',
     icon: 'icon-MV'
   }
 ]

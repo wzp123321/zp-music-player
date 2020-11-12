@@ -24,6 +24,42 @@ const routes: Array<RouteConfig> = [
             /* webpackChunkName: "music-player-dashboard" */ '@/views/pages/discover/index.vue'
           )
       },
+      // 排行榜
+      {
+        path: '/app/rank',
+        name: 'Rank',
+        component: () =>
+          import(
+            /* webpackChunkName: "music-player-rank" */ '@/views/pages/rank/index.vue'
+          )
+      },
+      // 歌单
+      {
+        path: '/app/playlist',
+        name: 'PlayList',
+        component: () =>
+          import(
+            /* webpackChunkName: "music-player-playlist" */ '@/views/pages/playlist/index.vue'
+          )
+      },
+      // 歌手
+      {
+        path: '/app/artist',
+        name: 'Artist',
+        component: () =>
+          import(
+            /* webpackChunkName: "music-player-artist" */ '@/views/pages/artist/index.vue'
+          )
+      },
+      // mv
+      {
+        path: '/app/mv',
+        name: 'Mv',
+        component: () =>
+          import(
+            /* webpackChunkName: "music-player-mv" */ '@/views/pages/mv/index.vue'
+          )
+      },
       // 搜索
       {
         path: '/app/search',

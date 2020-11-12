@@ -7,14 +7,7 @@
       borderRadius: borderRadius
     }"
   >
-    <img
-      :src="imgUrl"
-      alt=""
-      :style="{
-        width: width + 'px',
-        height: height + 'px'
-      }"
-    />
+    <img :src="imgUrl" alt="" />
   </div>
 </template>
 <script lang="ts">
@@ -44,6 +37,8 @@ export default class ImagePreview extends Vue {
   border: 1px solid #ededed;
   overflow: hidden;
   img {
+    width: 100%;
+    height: 100%;
     transform: scale(1);
     transition: 500ms;
   }

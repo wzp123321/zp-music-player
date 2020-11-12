@@ -6,6 +6,7 @@
         checkCurrentRoute(menuItem.path) ? 'active-menu' : ''
       ]"
       v-for="(menuItem, menuIndex) in menuList"
+      @click="toPage(menuItem.path)"
       :key="menuIndex"
     >
       <i :class="['iconfont', menuItem.icon]"></i
@@ -27,6 +28,9 @@ export default class LeftSide extends Vue {
     return this.$route.path.includes(path)
   }
   // 路由跳转
+  toPage(path: string) {
+    this.$router.push(path)
+  }
 }
 </script>
 <style lang="less" scoped>

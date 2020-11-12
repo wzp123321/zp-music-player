@@ -132,7 +132,7 @@ export default class Search extends Vue {
         console.log(res)
         switch (type) {
           case 1:
-            this.musicList = [...this.musicList, ...res.result.songs]
+            this.musicList = res.result.songs
             this.pagination.total = res.result.songCount
             break
           case 10:

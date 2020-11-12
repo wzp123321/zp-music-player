@@ -35,11 +35,10 @@
 }
 
 /* 交叉轴上顶端对齐 */
-.flex-align-start {
-    -webkit-align-items: flex-start;
-    -webkit-box-align: start;
-    -ms-flex-align: start;
-    align-items: flex-start;
+.flex-row-start {
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
 }
 
 /* 交叉轴上居中对齐 */
@@ -330,9 +329,4 @@
     -webkit-box-align: end;
     -ms-flex-align: end;
     align-items: flex-end;
-}
-
-.flex-wrap {
-    display: flex;
-    flex-wrap: wrap;
 }
