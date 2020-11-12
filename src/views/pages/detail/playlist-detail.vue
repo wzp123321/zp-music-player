@@ -46,7 +46,7 @@
     </div>
     <el-tabs v-model="activeName">
       <el-tab-pane label="歌曲列表" name="first">
-        <zp-music-table :musicList="musicList"></zp-music-table>
+        <zp-music-table :musicList="musicList" :pagination="pagination"></zp-music-table>
       </el-tab-pane>
       <el-tab-pane :label="`评论(${pagination.total})`" name="second">
         <div v-if="commentList.length > 0">

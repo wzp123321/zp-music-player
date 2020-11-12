@@ -147,6 +147,7 @@ export default class MusicPlayer extends Vue {
       if (res && res.data) {
         this.src = res.data[0].url
         this.playing = true
+        document.title = newVal.name
       }
     } catch (error) {
       console.log(error)

@@ -33,10 +33,10 @@
       <!-- 所属专辑 -->
       <el-table-column label="所属专辑" align="center">
         <template slot-scope="scope" v-if="scope.row.al">
-          {{ scope.row.al.name }}
-        </template>
-        <template slot-scope="scope" v-if="scope.row.album">
-          {{ scope.row.album.name }}
+          {{
+            (scope.row.al && scope.row.al.name) ||
+              (scope.row.album && scope.row.album.name)
+          }}
         </template>
       </el-table-column>
       <el-table-column label="时长" align="center">

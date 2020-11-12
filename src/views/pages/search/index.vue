@@ -8,7 +8,21 @@
           @handleCurrentChange="handleCurrentChange"
         ></zp-music-table>
       </el-tab-pane>
-      <el-tab-pane label="专辑" name="10"> </el-tab-pane>
+      <el-tab-pane label="专辑" name="10">
+        <div class="flex-wrap">
+          <zp-album-item
+            v-for="(playItem, playIndex) in albumList"
+            :key="playIndex"
+            :albumInfo="playItem"
+          >
+          </zp-album-item>
+        </div>
+        <p class="load-more" @click="loadMore('albumList')">
+          {{
+            pagination.total === albumList.length ? '没有更多了~' : '加载更多~'
+          }}
+        </p>
+      </el-tab-pane>
       <el-tab-pane label="歌手" name="100"> </el-tab-pane>
       <el-tab-pane label="歌单" name="1000">
         <div class="flex-wrap">
@@ -19,7 +33,7 @@
           >
           </zp-playlist-item>
         </div>
-        <p class="load-more" @click="loadMore">
+        <p class="load-more" @click="loadMore('playlist')">
           {{
             pagination.total === playlist.length ? '没有更多了~' : '加载更多~'
           }}
@@ -71,6 +85,8 @@ export default class Search extends Vue {
   private videoList: MusicModule.MvInfo[] = []
   // 歌单列表
   private playlist: MusicModule.PlayListInfo[] = []
+  // 专辑列表
+  private albumList: MusicModule.AlbumInfo[] = []
   // 搜索类型
   private type = '1'
   // 搜索
@@ -90,19 +106,23 @@ export default class Search extends Vue {
         console.log(res)
         switch (type) {
           case 1:
-            this.musicList = res.result.songs
+            this.musicList = [...this.musicList, ...res.result.songs]
             this.pagination.total = res.result.songCount
             break
+          case 10:
+            this.albumList = [...this.albumList, ...res.result.albums]
+            this.pagination.total = res.result.albumCount
+            break
           case 1000:
-            this.playlist = res.result.playlists
+            this.playlist = [...this.playlist, ...res.result.playlists]
             this.pagination.total = res.result.playlistCount
             break
           case 1004:
-            this.videoList = res.result.mvs
+            this.videoList = [...this.videoList, ...res.result.mvs]
             this.pagination.total = res.result.mvCount
             break
           case 1014:
-            this.videoList = res.result.videos
+            this.videoList = [...this.videoList, ...res.result.videos]
             this.pagination.total = res.result.videoCount
             break
         }
@@ -119,7 +139,7 @@ export default class Search extends Vue {
     this.onSearch()
   }
   // 加载更多
-  loadMore(type = 'playlist') {
+  loadMore(type = 'playlist' || 'albumList') {
     if ((this as any)[type].length < this.pagination.total) {
       this.pagination.page += 1
       this.onSearch()
@@ -151,6 +171,7 @@ export default class Search extends Vue {
 </script>
 <style lang="less" scoped>
 .m-Search {
+  padding: 12px 24px;
   .load-more {
     padding: 12px 0;
     text-align: center;
@@ -159,7 +180,7 @@ export default class Search extends Vue {
   }
   ::v-deep .el-tabs {
     .el-tabs__header {
-      padding: 1rem;
+      padding: 1rem 0;
     }
     .el-tabs__item {
       padding: 0 2.125rem;

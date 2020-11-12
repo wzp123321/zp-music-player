@@ -6,6 +6,7 @@ declare namespace CommonModule {
     urls: T
     result: T
     banners: T
+    album: T
     category: number
     hasTaste: boolean
     playlist: { [key: string]: value }

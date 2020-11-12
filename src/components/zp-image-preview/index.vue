@@ -38,5 +38,15 @@ export default class ImagePreview extends Vue {
   cursor: pointer;
   background-color: #eee;
   border-radius: 8px;
+  border: 1px solid #ededed;
+  overflow: hidden;
+  img {
+    transform: scale(1);
+    transition: 500ms;
+  }
+  img:hover {
+    transform: scale(1.1);
+    transition: 500ms;
+  }
 }
 </style>

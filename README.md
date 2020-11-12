@@ -1,9 +1,11 @@
-# 模仿网易云音乐开发
+# 接口地址
 
-## 接口地址---https://node.zpwan-yz.com
+https://node.zpwan-yz.com
 
-### api文档---https://binaryify.github.io/NeteaseCloudMusicApi/#/
+## api文档
 
-#### 模仿ui---https://ssh-music.vercel.app/#/discovery
+https://binaryify.github.io/NeteaseCloudMusicApi/#/?id=neteasecloudmusicapi
 
-##### 技术栈----Vue.js--Element-ui
+### 技术栈
+
+Vue.js--Element-ui

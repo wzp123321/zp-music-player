@@ -35,11 +35,20 @@ const routes: Array<RouteConfig> = [
       },
       // 歌单详情
       {
-        path: '/app/playlist/Detail',
+        path: '/app/playlist/detail',
         name: 'PlayListDetail',
         component: () =>
           import(
-            /* webpackChunkName: "music-player-dashboard" */ '@/views/pages/playlist-detail/index.vue'
+            /* webpackChunkName: "music-player-dashboard" */ '@/views/pages/detail/playlist-detail.vue'
+          )
+      },
+       // 详情
+       {
+        path: '/app/album/detail',
+        name: 'AlbumDetail',
+        component: () =>
+          import(
+            /* webpackChunkName: "music-player-dashboard" */ '@/views/pages/detail/album-detail.vue'
           )
       }
     ]

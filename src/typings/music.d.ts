@@ -73,4 +73,18 @@ declare namespace MusicModule {
     vid: string
     title: string
   }
+  // 专辑
+  interface AlbumInfo {
+    artist: UserModule.ArtistInfo
+    artists: UserModule.ArtistInfo[]
+    blurPicUrl: string
+    description: string
+    id: number
+    name: string
+    picUrl: string
+    songs: MusicModule.SongInfo[]
+    status: number
+    tags: string
+    type: string
+  }
 }

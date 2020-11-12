@@ -48,6 +48,22 @@ const MusicApi = {
     } catch (error) {
       throw new Error(error)
     }
+  },
+  /**
+   *根据id获取专辑详情
+   */
+  async getAlbumInfoById(params: {
+    id: number
+  }): Promise<CommonModule.Responsive<any>> {
+    try {
+      const result: CommonModule.Responsive<any> = await getRequest(
+        '/album',
+        params
+      )
+      return result
+    } catch (error) {
+      throw new Error(error)
+    }
   }
 }
 

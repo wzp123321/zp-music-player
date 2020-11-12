@@ -29,6 +29,9 @@ export default class PlaylistItem extends Vue {
     this.$router.push('/app/playlist/detail?id=' + this.playListInfo.id)
   }
   getTag(title: string) {
+    if (!title) {
+      return ''
+    }
     return title.substring(0, 40)
   }
 }
