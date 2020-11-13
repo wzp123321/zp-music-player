@@ -19,17 +19,15 @@
       >
       </zp-playlist-item>
     </div>
-    <!-- 最近歌曲 -->
-    <zp-module title="最近歌曲"></zp-module>
-    <div v-if="recentMusicList.length > 0" class="m-Dashboard-playlist">
-      <zp-recent-music
-        v-for="(playItem, playIndex) in recentMusicList"
-        :key="playIndex"
-        :index="playIndex"
-        :recentMusicInfo="playItem"
-      >
-      </zp-recent-music>
-    </div>
+    <!-- 新歌速递 -->
+    <zp-module
+      title="新歌速递"
+      v-if="recommendMusicList.length > 0"
+    ></zp-module>
+    <zp-music-table
+      :musicList="recommendMusicList"
+      v-if="recommendMusicList.length > 0"
+    ></zp-music-table>
     <!-- 最新mv -->
     <zp-module title="最新mv"></zp-module>
     <div v-if="recommendMvList.length > 0" class="m-Dashboard-playlist">
@@ -60,12 +58,13 @@ import {
 })
 export default class Dashboard extends Vue {
   private loading = false
+  private type = 0
   // banner列表
   private bannerList: MusicModule.BannerInfo[] = []
   // 推荐歌单
   private recommendPlayList: MusicModule.PlayListInfo[] = []
   // 最近歌曲
-  private recentMusicList: MusicModule.MusicInfo[] = []
+  private recommendMusicList: MusicModule.MusicInfo[] = []
   // 推荐mv
   private recommendMvList: MusicModule.MvInfo[] = []
   // 获取banner
@@ -93,9 +92,10 @@ export default class Dashboard extends Vue {
   // 获取最新音乐
   async getRecentMusicList() {
     try {
-      const res = await MusicApi.getRecentMusicList({ limit: 10 })
+      const { type } = this
+      const res = await MusicApi.getRecommendMusicList({ type })
       if (res) {
-        this.recentMusicList = res.result
+        this.recommendMusicList = res.data
       }
     } catch (error) {
       throw new Error(error)

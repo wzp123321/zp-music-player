@@ -2,14 +2,14 @@ import { getRequest, postRequest } from '@/service/request'
 
 const MusicApi = {
   /**
-   * 获取最新歌曲
+   * 获取最新歌曲 type 全部:0 华语:7 欧美:96 日本:8 韩国:16
    */
-  async getRecentMusicList(params: {}): Promise<
-    CommonModule.Responsive<MusicModule.MusicInfo[]>
-  > {
+  async getRecommendMusicList(params: {
+    type: number
+  }): Promise<CommonModule.Responsive<MusicModule.MusicInfo[]>> {
     try {
       const result: CommonModule.Responsive<MusicModule.MusicInfo[]> = await getRequest(
-        '/personalized/newsong',
+        '/top/song',
         params
       )
       return result

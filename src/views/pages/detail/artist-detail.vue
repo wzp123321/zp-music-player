@@ -14,15 +14,15 @@
         </span>
       </div>
     </div>
-    <el-divider content-position="left">热门歌曲</el-divider>
+    <zp-module title="热门歌曲"></zp-module>
     <div class="m-ArtistDetail-data">
       {{ hotSong }}
     </div>
-    <el-divider content-position="left">演艺经历</el-divider>
+    <zp-module title="演艺经历"></zp-module>
     <div class="m-ArtistDetail-data">
       {{ hotSong }}
     </div>
-    <el-divider content-position="left">荣誉记录</el-divider>
+    <zp-module title="荣誉记录"></zp-module>
     <div class="m-ArtistDetail-data honorRecord">
       {{ honorRecord }}
     </div>
@@ -106,12 +106,6 @@ export default class ArtistDetail extends Vue {
   .honorRecord {
     text-indent: 2em;
     letter-spacing: 0.1em;
-  }
-  ::v-deep .el-divider {
-    .el-divider__text {
-      font-size: 18px;
-      font-weight: bold;
-    }
   }
 }
 </style>

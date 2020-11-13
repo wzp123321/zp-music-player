@@ -1,10 +1,5 @@
 <template>
-  <div class="zp-Module flex-row-justify-end">
-    <div class="title">
-      {{ title }}
-    </div>
-    <slot></slot>
-  </div>
+  <el-divider content-position="left">{{ title }}</el-divider>
 </template>
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
@@ -18,10 +13,10 @@ export default class Module extends Vue {
 }
 </script>
 <style lang="less" scoped>
-.zp-Module {
-  padding: 14px 0;
-  .title {
-    font-size: 18px;
+.el-divider {
+  margin: 2.5rem 0;
+  .el-divider__text {
+    font-size: 20px;
     color: #333;
     font-weight: bold;
   }

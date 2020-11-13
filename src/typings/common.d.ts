@@ -2,6 +2,7 @@ declare namespace CommonModule {
   // 公共返回
   interface Responsive<T> {
     code: number
+    count: number
     data: T
     urls: T
     result: T

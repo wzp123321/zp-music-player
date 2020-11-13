@@ -32,11 +32,13 @@
       </el-table-column>
       <!-- 所属专辑 -->
       <el-table-column label="所属专辑" align="center">
-        <template slot-scope="scope" v-if="scope.row.al">
-          {{
-            (scope.row.al && scope.row.al.name) ||
-              (scope.row.album && scope.row.album.name)
-          }}
+        <template slot-scope="scope">
+          <span v-if="scope.row.al && scope.row.al.name">
+            {{ scope.row.al.name }}
+          </span>
+          <span v-if="scope.row.album && scope.row.album.name">
+            {{ scope.row.album.name }}
+          </span>
         </template>
       </el-table-column>
       <el-table-column label="时长" align="center">
@@ -65,7 +67,11 @@ import { Vue, Component, Prop } from 'vue-property-decorator'
 export default class MusicTable extends Vue {
   @Prop({ default: [] })
   private musicList!: MusicModule.SongInfo[]
-  @Prop({ default: { page: 1, total: 0 } })
+  @Prop({
+    default: () => {
+      return { page: 1, total: 0 }
+    }
+  })
   private pagination!: { page: number; total: number }
   // 格式化时长
   formatDuration(time: any) {

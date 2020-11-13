@@ -21,7 +21,7 @@
         </div>
       </div>
     </div>
-    <el-divider content-position="left">热门标签</el-divider>
+    <zp-module title="热门标签"></zp-module>
     <div class="m-Playlist-tags">
       <span
         v-for="(item, index) in hotTags"
@@ -31,9 +31,7 @@
         >{{ item.name }}</span
       >
     </div>
-    <el-divider content-position="left" v-if="playlist.length > 0"
-      >网友自制歌单</el-divider
-    >
+    <zp-module title="网友自制歌单" v-if="playlist.length > 0"></zp-module>
     <div class="m-Playlist-list flex-wrap" v-if="playlist.length > 0">
       <zp-playlist-item
         v-for="(item, index) in playlist"
@@ -41,9 +39,10 @@
         :playListInfo="item"
       ></zp-playlist-item>
     </div>
-    <el-divider content-position="left" v-if="highQualityPlayList.length > 0"
-      ><span class="highQuality">精品歌单</span></el-divider
-    >
+    <zp-module
+      title="精品歌单"
+      v-if="highQualityPlayList.length > 0"
+    ></zp-module>
     <div
       class="m-Playlist-list flex-wrap"
       v-if="highQualityPlayList.length > 0"
@@ -213,15 +212,6 @@ export default class PlayList extends Vue {
       background-color: @common-color;
       color: #fff;
       transition: all 500ms;
-    }
-  }
-  ::v-deep .el-divider {
-    margin-top: 48px;
-    margin-bottom: 32px;
-    .el-divider__text {
-      font-size: 20px;
-      color: #333;
-      font-weight: bold;
     }
   }
 }
