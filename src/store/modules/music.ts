@@ -52,6 +52,17 @@ const Music: Module<MusicState, {}> = {
     }
   },
   getters: {
+    /**
+     * 获取音乐列表
+     * @param state
+     */
+    musicIndex(state: MusicState) {
+      return state.musicIndex
+    },
+    /**
+     *
+     * @param state 音乐响起
+     */
     musicInfo(state: MusicState) {
       const musicIndex = Number(
         window.localStorage.getItem('zpwan_music_index') || '0'

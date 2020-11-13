@@ -7,6 +7,7 @@
       @timeupdate="onTimeUpdate"
       @loadeddata="onLoad"
       @ended="onEnd"
+      @error="onError"
     ></audio>
     <!-- 进度条 -->
     <el-slider
@@ -111,8 +112,9 @@ export default class MusicPlayer extends Vue {
   next() {
     let index = this.$store.state.music.musicIndex
     const musicList = this.$store.state.music.musicList
-    index = index + 1 > this.$store.state.music.musicList.length ? 0 : index + 1
+    index = index + 1 === this.$store.state.music.musicList.length ? 0 : index + 1
     this.$store.dispatch('music/setCurrentMusicIndex', index)
+
   }
   // 更新时间
   onTimeUpdate(e: any) {
@@ -126,6 +128,10 @@ export default class MusicPlayer extends Vue {
   }
   // 播放结束
   onEnd() {
+    this.next()
+  }
+  // 播放报错
+  onError() {
     this.next()
   }
   // 获取歌曲
@@ -143,11 +149,19 @@ export default class MusicPlayer extends Vue {
     oldVal: { id: string; name: string; picUrl: string }
   ) {
     try {
+      if (!newVal.id) {
+        return
+      }
       const res = await MusicApi.getMusicUrlById({ id: newVal.id })
       if (res && res.data) {
-        this.src = res.data[0].url
-        this.playing = true
         document.title = newVal.name
+        if (res.data.length && res.data[0].url) {
+          this.src = res.data[0].url
+          this.playing = true
+        } else {
+          this.playing = false
+          this.$message.error('当前歌曲暂时不可播放')
+        }
       }
     } catch (error) {
       console.log(error)

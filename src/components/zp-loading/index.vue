@@ -1,5 +1,5 @@
 <template>
-  <div class="m-Loading"></div>
+  <div class="zp-Loading"></div>
 </template>
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'

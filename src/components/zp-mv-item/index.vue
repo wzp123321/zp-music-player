@@ -1,7 +1,7 @@
 <template>
-  <div class="m-Mv" @click="handleMvPlay">
+  <div class="zp-Mv" @click="handleMvPlay">
     <img :src="mvInfo.picUrl || mvInfo.coverUrl || mvInfo.cover" alt="" />
-    <div class="m-Mv-singer flex-column-justify-end ">
+    <div class="zp-Mv-singer flex-column-justify-end ">
       <div class="name">
         <span>{{ mvInfo.name || mvInfo.title }}</span>
         /
@@ -40,7 +40,7 @@ export default class MvItem extends Vue {
 }
 </script>
 <style lang="less" scoped>
-.m-Mv {
+.zp-Mv {
   cursor: pointer;
   position: relative;
   width: 360px;
@@ -82,7 +82,7 @@ export default class MvItem extends Vue {
     }
   }
 }
-.m-Mv::after {
+.zp-Mv::after {
   content: '';
   width: 100%;
   height: 100%;
@@ -91,10 +91,10 @@ export default class MvItem extends Vue {
   top: 0;
   left: 0;
 }
-.m-Mv:last-child {
+.zp-Mv:last-child {
   margin-right: 0;
 }
-.m-Mv:hover::after {
+.zp-Mv:hover::after {
   background-color: rgba(0, 0, 0, 0);
   transition: all 300ms;
   z-index: 999;

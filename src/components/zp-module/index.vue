@@ -1,5 +1,5 @@
 <template>
-  <div class="m-Module flex-row-justify-end">
+  <div class="zp-Module flex-row-justify-end">
     <div class="title">
       {{ title }}
     </div>
@@ -18,7 +18,7 @@ export default class Module extends Vue {
 }
 </script>
 <style lang="less" scoped>
-.m-Module {
+.zp-Module {
   padding: 14px 0;
   .title {
     font-size: 18px;

@@ -1,7 +1,7 @@
 <template>
-  <div class="m-Comment flex">
+  <div class="zp-Comment flex">
     <img :src="commentInfo.user.avatarUrl" alt="" />
-    <div class="m-Comment-info">
+    <div class="zp-Comment-info">
       <span class="content">{{ commentInfo.content }}</span>
       <div v-if="commentInfo.beReplied.length > 0">
         <span
@@ -32,7 +32,7 @@ export default class CommentItem extends Vue {
 }
 </script>
 <style lang="less" scoped>
-.m-Comment {
+.zp-Comment {
   font-size: 16px;
   color: #333;
   padding: 24px 0;

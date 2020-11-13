@@ -1,5 +1,5 @@
 <template>
-  <div class="m-NoData flex-column-center-center">
+  <div class="zp-NoData flex-column-center-center">
     <img src="../../assets/img/common/no_data.png" alt="" />
     <span>{{ text }}</span>
   </div>
@@ -16,7 +16,7 @@ export default class CommentItem extends Vue {
 }
 </script>
 <style lang="less" scoped>
-.m-NoData {
+.zp-NoData {
   width: 100%;
   height: 100%;
   color: #999;

@@ -1,5 +1,5 @@
 <template>
-  <div class="m-Artist" @click="toDetail">
+  <div class="zp-Artist" @click="toDetail">
     <zp-image-preview
       :imgUrl="artistInfo.img1v1Url"
       :width="120"
@@ -25,7 +25,7 @@ export default class ArtistItem extends Vue {
 }
 </script>
 <style lang="less" scoped>
-.m-Artist {
+.zp-Artist {
   margin-right: 36px;
   margin-bottom: 36px;
   span {
@@ -33,7 +33,7 @@ export default class ArtistItem extends Vue {
     max-width: 120px;
   }
 }
-.m-Artist:nth-child(10n) {
+.zp-Artist:nth-child(10n) {
   margin-right: 0;
 }
 </style>

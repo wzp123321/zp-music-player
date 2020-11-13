@@ -1,12 +1,12 @@
 <template>
-  <div class="m-Recent-music flex-row-start-center">
-    <div class="m-Recent-music-index">0{{ index + 1 }}</div>
+  <div class="zp-Recent-music flex-row-start-center">
+    <div class="zp-Recent-music-index">0{{ index + 1 }}</div>
     <zp-image-preview
       :imgUrl="recentMusicInfo.picUrl"
       :width="80"
       :height="80"
     ></zp-image-preview>
-    <div class="m-Recent-music-artist">
+    <div class="zp-Recent-music-artist">
       <div class="title">
         {{ recentMusicInfo.name }}
       </div>
@@ -44,7 +44,7 @@ export default class RecentMusic extends Vue {
 </script>
 <style lang="less" scoped>
 @import url('../../style/common.less');
-.m-Recent-music {
+.zp-Recent-music {
   position: relative;
   margin-bottom: 24px;
   margin-right: 24px;

@@ -182,6 +182,10 @@ export default class Search extends Vue {
   // 监听关键词变化
   @Watch('keywords')
   handleKeywordsChange(newVal: string, oldVal: string) {
+    this.pagination = {
+      page: 1,
+      total: 0
+    }
     this.onSearch()
   }
   // 监听类别变化

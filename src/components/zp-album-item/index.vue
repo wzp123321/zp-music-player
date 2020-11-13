@@ -1,5 +1,5 @@
 <template>
-  <div class="m-Album" @click="toDetail">
+  <div class="zp-Album" @click="toDetail">
     <zp-image-preview
       :imgUrl="albumInfo.blurPicUrl"
       :width="240"
@@ -28,7 +28,7 @@ export default class AlbumItem extends Vue {
 }
 </script>
 <style lang="less" scoped>
-.m-Album {
+.zp-Album {
   margin-right: 24px;
   margin-bottom: 24px;
   text-align: left;
@@ -43,7 +43,7 @@ export default class AlbumItem extends Vue {
     white-space: nowrap;
   }
 }
-.m-Album:nth-child(6n) {
+.zp-Album:nth-child(6n) {
   margin-right: 0;
 }
 </style>

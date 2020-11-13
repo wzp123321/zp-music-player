@@ -1,5 +1,5 @@
 <template>
-  <div class="m-Playlist" @click="getToPlayListInfo">
+  <div class="zp-Playlist" @click="getToPlayListInfo">
     <div class="tag">
       {{ getTag(playListInfo.copywriter || playListInfo.description) }}
     </div>
@@ -39,7 +39,7 @@ export default class PlaylistItem extends Vue {
 <style lang="less" scoped>
 @import url('../../style/common.less');
 
-.m-Playlist {
+.zp-Playlist {
   cursor: pointer;
   position: relative;
   overflow: hidden;
@@ -47,7 +47,7 @@ export default class PlaylistItem extends Vue {
   margin-bottom: 24px;
   width: 272px;
   .tag {
-    width: 100%;
+    width: 272px;
     position: absolute;
     top: -60px;
     left: 0;
@@ -57,6 +57,7 @@ export default class PlaylistItem extends Vue {
     background-color: rgba(0, 0, 0, 0.7);
     color: #fff;
     transition: all 300ms;
+    z-index: 999;
   }
   .description {
     width: 100%;
@@ -75,7 +76,7 @@ export default class PlaylistItem extends Vue {
     color: @common-color;
   }
 }
-.m-Playlist:hover {
+.zp-Playlist:hover {
   .tag {
     transition: all 500ms;
     top: 0;
@@ -85,7 +86,7 @@ export default class PlaylistItem extends Vue {
     transition: all 500ms;
   }
 }
-.m-Playlist:nth-child(5n) {
+.zp-Playlist:nth-child(5n) {
   margin-right: 0;
 }
 </style>

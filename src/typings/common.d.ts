@@ -20,4 +20,9 @@ declare namespace CommonModule {
     interactCount: number
     comments: Array<T>
   }
+  // tag
+  interface TagInfo {
+    id: number
+    name: string
+  }
 }
