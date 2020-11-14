@@ -27,7 +27,7 @@ export default class ArtistItem extends Vue {
 <style lang="less" scoped>
 .zp-Artist {
   margin-right: 36px;
-  margin-bottom: 36px;
+  margin-bottom: 54px;
   span {
     display: inline-block;
     max-width: 120px;

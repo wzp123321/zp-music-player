@@ -168,6 +168,7 @@ export default class AlbumDetail extends Vue {
   &-header {
     margin-bottom: 24px;
     .info {
+      flex: 1;
       font-size: 16px;
       color: #666;
       margin-left: 16px;

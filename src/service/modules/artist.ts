@@ -12,5 +12,17 @@ export default {
     } catch (error) {
       throw new Error(error)
     }
+  },
+  /**
+   * 获取热门歌手
+   * @param params offset:分页
+   */
+  async getHotArtistList(params: { offset: number }): Promise<any> {
+    try {
+      const result: any = await getRequest('/top/artists', params)
+      return result
+    } catch (error) {
+      throw new Error(error)
+    }
   }
 }

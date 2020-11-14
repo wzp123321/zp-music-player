@@ -8,11 +8,11 @@
             'url(' + `${hightQualityPlaylistInfo.coverImgUrl}` + ')'
         }"
       ></div>
-      <img
-        :src="hightQualityPlaylistInfo.coverImgUrl"
-        alt=""
-        class="coverImg"
-      />
+      <zp-image-preview
+        :imgUrl="hightQualityPlaylistInfo.coverImgUrl"
+        :width="280"
+        :height="210"
+      ></zp-image-preview>
       <div class="info">
         <el-button @click="toHighQuality">精品歌单</el-button>
         <div class="title">{{ hightQualityPlaylistInfo.name }}</div>
@@ -149,12 +149,8 @@ export default class PlayList extends Vue {
     padding: 32px;
     border-radius: 12px;
     overflow: hidden;
-    .coverImg {
-      width: 280px;
-      height: auto;
-      z-index: 1;
-    }
     .info {
+      flex: 1;
       z-index: 1;
       color: #fff;
       text-align: left;

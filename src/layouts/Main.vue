@@ -23,6 +23,14 @@
       :title="mvName"
       :mvType="mvType"
     ></zp-mv-dialog>
+    <!-- 播放历史 -->
+    <el-drawer
+      title="播放历史"
+      :visible.sync="historyVisiable"
+      :with-header="false"
+    >
+      <span>我来啦!</span>
+    </el-drawer>
   </div>
 </template>
 <script lang="ts">
@@ -47,6 +55,8 @@ export default class Main extends Vue {
   private mvId = 0
   // mv名称
   private mvName = ''
+  // 播放历史开关
+  private historyVisiable = false
   // 视频类型
   private mvType = 'mv'
   //添加mv播放弹框监听事件
@@ -64,9 +74,16 @@ export default class Main extends Vue {
       }
     )
   }
+  // 监听播放历史弹框
+  private onPlayhHistoryDrawer() {
+    ;(this as any).bus.$on('onHistroyDrawer', () => {
+      this.historyVisiable = true
+    })
+  }
   created() {
     this.$nextTick(() => {
       this.onMvDialogShow()
+      this.onPlayhHistoryDrawer()
     })
   }
 }

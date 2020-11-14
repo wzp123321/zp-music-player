@@ -3,17 +3,20 @@
     <div class="title">zpwan@music.com</div>
     <div class="search flex-row-justify-center">
       <i class="iconfont icon-fanhui" @click="goBack"></i>
-      <el-input
-        placeholder="请输入内容"
-        v-model="state"
-        class="input-with-select"
-      >
-        <el-button
-          slot="append"
-          icon="el-icon-search"
-          @click="handleSearch"
-        ></el-button>
-      </el-input>
+      <div class="flex-row-center-center">
+        <el-input
+          placeholder="请输入内容"
+          v-model="state"
+          class="input-with-select"
+        >
+          <el-button
+            slot="append"
+            icon="el-icon-search"
+            @click="handleSearch"
+          ></el-button>
+        </el-input>
+        <i class="iconfont icon-menu" @click="getHistoryDrawerShow"></i>
+      </div>
     </div>
   </div>
 </template>
@@ -46,6 +49,10 @@ export default class Header extends Vue {
     const baseUrl = '/static/style/theme'
     ;(this as any).$addCssByLink(`${baseUrl}${theme}css`)
   }
+  // 打开抽屉
+  getHistoryDrawerShow() {
+    ;(this as any).bus.$emit('onHistroyDrawer')
+  }
   mounted() {
     this.getSearchDefaultKeyword()
   }
@@ -73,6 +80,10 @@ export default class Header extends Vue {
     .iconfont {
       cursor: pointer;
       font-size: 1.2rem;
+    }
+    .icon-menu {
+      font-size: 1.5rem;
+      margin-left: 1rem;
     }
   }
 }

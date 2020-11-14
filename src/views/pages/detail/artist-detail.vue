@@ -4,8 +4,8 @@
     <div class="m-ArtistDetail-briefDesc flex-row-start">
       <zp-image-preview
         :imgUrl="artistInfo.coverUrl"
-        :width="480"
-        :height="300"
+        :width="360"
+        :height="240"
       ></zp-image-preview>
       <div class="info">
         <span class="title">{{ artistInfo.mainTitle }}</span>
@@ -75,20 +75,19 @@ export default class ArtistDetail extends Vue {
 </script>
 <style lang="less" scoped>
 .m-ArtistDetail {
-  width: 100%;
   padding: 24px;
   &-briefDesc {
-    width: 100%;
     font-size: 14px;
     color: #333;
     margin-bottom: 60px;
     .info {
+      flex: 1;
       text-align: left;
+      margin-left: 16px;
       .title {
         font-size: 18px;
         color: #333;
         font-weight: bold;
-        margin-left: 24px;
         margin-bottom: 16px;
       }
       .desc {
