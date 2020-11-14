@@ -86,22 +86,10 @@ export default class AlbumDetail extends Vue {
     })
     return names.join('/')
   }
-  // 播放
-  getMusicPlay(index: number) {
-    const list = this.musicList.map((item: any) => {
-      return {
-        name: item.name,
-        picUrl: item.al.picUrl,
-        artist: this.getArtist(item.ar),
-        id: item.id
-      }
-    })
-    this.$store.dispatch('music/setCurrentMusicList', list)
-    this.$store.dispatch('music/setCurrentMusicIndex', index)
-  }
   // 播放全部
   getAllPlayListPlay() {
-    this.getMusicPlay(0)
+    this.$store.dispatch('music/setCurrentMusicList', this.musicList)
+    this.$store.dispatch('music/setCurrentMusicIndex', 0)
   }
   // 获取评论列表
   async getCommentList() {

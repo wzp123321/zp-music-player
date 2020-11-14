@@ -1,43 +1,51 @@
 import { Module } from 'vuex'
 
 interface MusicState {
-  musicInfo: { id: string; picUrl: string; name: string; artist: string }
+  musicInfo: any
   musicIndex: number
-  musicList: { id: string; picUrl: string; name: string; artist: string }[]
+  musicList: MusicModule.MusicInfo[]
+  playHistroy: MusicModule.MusicInfo[]
 }
 
 const Music: Module<MusicState, {}> = {
   namespaced: true,
   state: {
-    musicInfo: {
-      id: '',
-      name: '',
-      artist: '',
-      picUrl: ''
-    },
+    musicInfo: {},
     musicIndex: 0,
-    musicList: []
+    musicList: [],
+    playHistroy: []
   },
   mutations: {
     // 设置当前正在播放的音乐地址
     setCurrentMusicIndex(state: MusicState, data: number) {
-      // 存入缓存
-      window.localStorage.setItem('zpwan_music_index', data + '')
+      if (state.musicList.length === 0) {
+        return
+      }
       state.musicIndex = data
       state.musicInfo =
-        state.musicList.length === 0
-          ? {
-              id: '',
-              name: '',
-              picUrl: '',
-              artist: ''
-            }
-          : state.musicList[data]
+        state.musicList.length === 0 ? {} : state.musicList[data]
+      const playHistroy = JSON.parse(
+        window.localStorage.getItem('zp_music_play_history') || '[]'
+      )
+      if (playHistroy.length === 0) {
+        state.playHistroy = [state.musicInfo]
+        console.log(state.playHistroy)
+      } else {
+        const ids = playHistroy.map((item: any) => {
+          return item.id
+        })
+        if (!ids.includes(state.musicInfo.id)) {
+          playHistroy.push(state.musicInfo)
+        }
+        state.playHistroy = playHistroy
+      }
+      window.localStorage.setItem(
+        'zp_music_play_history',
+        JSON.stringify(state.playHistroy)
+      )
     },
     // 设置当前音乐列表
-    setCurrentMusicList(state: MusicState, data: any[]) {
-      // 存入缓存
-      window.localStorage.setItem('zpwan_music_list', data + '')
+    setCurrentMusicList(state: MusicState, data: any) {
       state.musicList = data
     }
   },
@@ -47,7 +55,7 @@ const Music: Module<MusicState, {}> = {
       return commit('setCurrentMusicIndex', data)
     },
     // 设置当前音乐列表
-    async setCurrentMusicList({ commit }, data: any[]) {
+    async setCurrentMusicList({ commit }, data: any) {
       return commit('setCurrentMusicList', data)
     }
   },
@@ -64,24 +72,26 @@ const Music: Module<MusicState, {}> = {
      * @param state 音乐响起
      */
     musicInfo(state: MusicState) {
-      const musicIndex = Number(
-        window.localStorage.getItem('zpwan_music_index') || '0'
-      )
-      const musicInfo =
-        state.musicList.length === 0
-          ? {}
-          : !musicIndex
-          ? state.musicList[0]
-          : state.musicList[musicIndex]
-      return musicInfo
+      return state.musicInfo
     },
     /**
      * 获取音乐列表
      * @param state
      */
     musicList(state: MusicState) {
-      const musicList = window.localStorage.getItem('zpwan_music_list') || []
-      return Object.keys(musicList).length === 0 ? state.musicList : musicList
+      return state.musicList
+    },
+    /**
+     * 播放历史
+     */
+    playHistroy(state: MusicState) {
+      const playHistroy = JSON.parse(
+        window.localStorage.getItem('zp_music_play_history') || '[]'
+      )
+      if (playHistroy && playHistroy.length > 0) {
+        state.playHistroy = playHistroy
+      }
+      return state.playHistroy
     }
   }
 }

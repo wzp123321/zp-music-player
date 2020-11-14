@@ -24,12 +24,13 @@
       :mvType="mvType"
     ></zp-mv-dialog>
     <!-- 播放历史 -->
-    <el-drawer
-      title="播放历史"
-      :visible.sync="historyVisiable"
-      :with-header="false"
-    >
-      <span>我来啦!</span>
+    <el-drawer :visible.sync="historyVisiable" :with-header="false">
+      <div class="play-history">
+        <span class="title">播放历史</span>
+        <div class="list">
+          <zp-music-table :musicList="historyMusicList"></zp-music-table>
+        </div>
+      </div>
     </el-drawer>
   </div>
 </template>
@@ -86,6 +87,9 @@ export default class Main extends Vue {
       this.onPlayhHistoryDrawer()
     })
   }
+  get historyMusicList(): MusicModule.SongInfo[] {
+    return this.$store.state.music.playHistroy
+  }
 }
 </script>
 <style lang="less" scoped>
@@ -120,6 +124,23 @@ export default class Main extends Vue {
     .right-content {
       height: 100%;
       flex: 1;
+    }
+  }
+  .play-history {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    .title {
+      text-align: left;
+      font-size: 18px;
+      color: #333;
+      font-weight: bold;
+      padding: 8px;
+      border-bottom: 1px solid #ededed;
+    }
+    .list {
+      flex: 1;
+      overflow-y: scroll;
     }
   }
 }

@@ -23,10 +23,19 @@
 
     <!-- 歌曲信息 -->
     <div class="music-player-avatar flex">
-      <img v-if="musicInfo.picUrl" :src="musicInfo.picUrl" alt />
+      <img
+        v-if="musicInfo.al && musicInfo.al.picUrl"
+        :src="musicInfo.al.picUrl"
+        alt
+      />
+      <img
+        v-if="musicInfo.artists && musicInfo.artists[0].img1v1Url"
+        :src="musicInfo.artists[0].img1v1Url"
+        alt
+      />
       <div class="info">
         <div>{{ musicInfo.name || '' }}</div>
-        <div>{{ musicInfo.artist || '' }}</div>
+        <div>{{ getArtist(musicInfo.ar) }}</div>
         <div v-if="duration">
           {{ formatDuration(progress) }}/{{ formatDuration(duration) }}
         </div>
@@ -68,6 +77,15 @@ export default class MusicPlayer extends Vue {
   private duration = 0
   // 是否处于拖动进度条状态
   private isDrag = false
+  getArtist(list: UserModule.ArtistInfo[]) {
+    if (!list) {
+      return ''
+    }
+    const names = list.map(item => {
+      return item.name
+    })
+    return names.join('/')
+  }
   // 格式化
   formatDuration(time: number) {
     return (this as any).$formatDuration(time)
@@ -112,9 +130,9 @@ export default class MusicPlayer extends Vue {
   next() {
     let index = this.$store.state.music.musicIndex
     const musicList = this.$store.state.music.musicList
-    index = index + 1 === this.$store.state.music.musicList.length ? 0 : index + 1
+    index =
+      index + 1 === this.$store.state.music.musicList.length ? 0 : index + 1
     this.$store.dispatch('music/setCurrentMusicIndex', index)
-
   }
   // 更新时间
   onTimeUpdate(e: any) {

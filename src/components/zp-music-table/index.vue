@@ -84,24 +84,10 @@ export default class MusicTable extends Vue {
   handleRowDbClick(row: any, column: any, event: any) {
     this.musicList.forEach((item, index) => {
       if (item.id === row.id) {
-        this.getMusicPlay(index)
+        this.$store.dispatch('music/setCurrentMusicList', this.musicList)
+        this.$store.dispatch('music/setCurrentMusicIndex', index)
       }
     })
-  }
-  // 播放
-  getMusicPlay(index: number) {
-    const list = this.musicList.map((item: any) => {
-      return {
-        name: item.name,
-        picUrl:
-          (item.al && item.al.picUrl) ||
-          (item.artists && item.artists[0].img1v1Url),
-        artist: this.getArtist(item.ar || item.artists),
-        id: item.id
-      }
-    })
-    this.$store.dispatch('music/setCurrentMusicList', list)
-    this.$store.dispatch('music/setCurrentMusicIndex', index)
   }
   // 处理歌手名
   getArtist(list: any) {
