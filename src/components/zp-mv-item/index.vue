@@ -31,10 +31,11 @@ export default class MvItem extends Vue {
   // mv播放
   handleMvPlay() {
     const params = {
-      id: this.mvInfo.id || this.mvInfo.vid,
-      name: this.mvInfo.name || this.mvInfo.title,
-      type: this.mvInfo.id ? 'mv' : this.mvInfo.vid ? 'video' : 'other'
-    }
+        id: this.mvInfo.id || this.mvInfo.vid,
+        name: this.mvInfo.name || this.mvInfo.title,
+        type: this.mvInfo.id ? 'mv' : this.mvInfo.vid ? 'video' : 'other'
+      }
+      // 断言
     ;(this as any).bus.$emit('mvDialogShow', params)
   }
 }

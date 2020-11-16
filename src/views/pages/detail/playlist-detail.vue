@@ -69,13 +69,13 @@
   </div>
 </template>
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator'
+import { Vue, Component, Mixins } from 'vue-property-decorator'
 import { PlayListApi, CommentApi, MusicApi } from '@/service/modules/index'
-
+import commonFnMixins from '@/utils/mixins'
 @Component({
   name: 'PlayListDetail'
 })
-export default class PlayListDetail extends Vue {
+export default class PlayListDetail extends Mixins(commonFnMixins) {
   private loading = false
   private activeName = 'first'
   private playListInfo: any = {}
@@ -88,16 +88,6 @@ export default class PlayListDetail extends Vue {
   }
   // 音乐列表
   private musicList: MusicModule.SongInfo[] = []
-  // 格式化时间
-  formatTime(time: number) {
-    return (this as any).$formatTime(time)
-  }
-  getArtist(list: any) {
-    const names = list.map((item: any) => {
-      return item.name
-    })
-    return names.join('/')
-  }
   // 处理标签
   getTag(list: string[]) {
     return list.length > 0 ? list.join(' ') : ''

@@ -1,7 +1,4 @@
 /*eslint-disable*/
-import { min } from 'lodash'
-import moment from 'moment'
-
 // 动态添加css
 export function addCssByLink(url: string) {
   const link = document.createElement('link')
@@ -15,23 +12,6 @@ export function addCssByLink(url: string) {
     document.documentElement.appendChild(link)
   }
   return link
-}
-
-/**
- * 格式化音乐时长
- * @param time 时长
- */
-export const formatDuration = (time: number, unit = 1) => {
-  if (!time) {
-    return '00:00'
-  }
-  var minutes = Math.floor(time / 60 / unit)
-  var seconds = Math.floor((time - minutes * 60 * unit) / unit)
-  return (
-    (minutes > 9 ? minutes : '0' + minutes) +
-    ':' +
-    (seconds > 9 ? seconds : '0' + seconds)
-  )
 }
 
 /**
@@ -107,16 +87,4 @@ export function audioPlay(
     timeUpdateFn && timeUpdateFn(e)
   }
   return audioPlayer
-}
-
-/**
- * 格式化日期
- * @param time 日期
- * @param format 格式
- */
-export const formatTime = (time: number, format = 'YYYY-MM-DD HH:MM') => {
-  if (!time) {
-    return '-- --'
-  }
-  return moment(time).format(format)
 }

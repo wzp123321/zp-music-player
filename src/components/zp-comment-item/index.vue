@@ -12,23 +12,22 @@
           {{ item.content }}
         </span>
       </div>
-      <span class="time">{{ formatTime(commentInfo.time) }}</span>
+      <span class="time">{{
+        formatTime(commentInfo.time, 'YYYY-MM-DD HH:mm:ss')
+      }}</span>
     </div>
   </div>
 </template>
 <script lang="ts">
-import { Vue, Component, Prop } from 'vue-property-decorator'
+import { Vue, Component, Prop, Mixins } from 'vue-property-decorator'
+import commonFnMixins from '@/utils/mixins'
 
 @Component({
   name: 'CommentItem'
 })
-export default class CommentItem extends Vue {
+export default class CommentItem extends Mixins(commonFnMixins) {
   @Prop({ default: '' })
   private commentInfo!: DataModule.CommentInfo
-  // 格式时间
-  private formatTime(time: number) {
-    return (this as any).$formatTime(time, 'YYYY-MM-DD HH:mm:ss')
-  }
 }
 </script>
 <style lang="less" scoped>

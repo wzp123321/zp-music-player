@@ -3,11 +3,16 @@
     <div class="playlist-detail-header flex">
       <zp-image-preview
         :imgUrl="albumInfo.picUrl"
-        :width="320"
-        :height="240"
+        :width="360"
+        :height="280"
       ></zp-image-preview>
       <div class="info flex-column">
         <span class="title">{{ albumInfo.name }}</span>
+        <div class="tags">
+          <el-button @click="getAllPlayListPlay"
+            >播放全部<i class="iconfont icon-bofang1"></i
+          ></el-button>
+        </div>
         <div class="author flex-row-start-center">
           <span>歌手：{{ getArtist(albumInfo.artists) }}</span>
         </div>
@@ -20,25 +25,13 @@
         <div class="description">
           {{ albumInfo.description }}
         </div>
-        <div class="tags">
-          <el-button @click="getAllPlayListPlay"
-            >播放全部<i class="iconfont icon-bofang1"></i
-          ></el-button>
-        </div>
       </div>
     </div>
     <!-- 音乐列表 -->
-    <div class="module-title">
-      歌曲列表
-    </div>
-    <zp-music-table
-      :musicList="musicList"
-      :pagination="pagination"
-    ></zp-music-table>
+    <zp-module title="歌曲列表"></zp-module>
+    <zp-music-table :musicList="musicList"></zp-music-table>
     <!-- 评论区 -->
-    <div class="module-title">
-      评论区
-    </div>
+    <zp-module title="评论区"></zp-module>
     <div v-if="commentList.length > 0">
       <zp-comment-item
         v-for="(item, index) in commentList"
@@ -55,13 +48,13 @@
   </div>
 </template>
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator'
+import { Vue, Component, Mixins } from 'vue-property-decorator'
 import { PlayListApi, CommentApi, MusicApi } from '@/service/modules/index'
-
+import commonFnMixins from '@/utils/mixins'
 @Component({
   name: 'AlbumDetail'
 })
-export default class AlbumDetail extends Vue {
+export default class AlbumDetail extends Mixins(commonFnMixins) {
   private loading = false
   private albumInfo: any = {}
   // 评论列表
@@ -73,19 +66,7 @@ export default class AlbumDetail extends Vue {
   }
   // 音乐列表
   private musicList: MusicModule.SongInfo[] = []
-  // 格式化时间
-  formatTime(time: number) {
-    return (this as any).$formatTime(time)
-  }
-  getArtist(list: any) {
-    if (!list) {
-      return ''
-    }
-    const names = list.map((item: any) => {
-      return item.name
-    })
-    return names.join('/')
-  }
+
   // 播放全部
   getAllPlayListPlay() {
     this.$store.dispatch('music/setCurrentMusicList', this.musicList)
@@ -166,10 +147,9 @@ export default class AlbumDetail extends Vue {
         margin-bottom: 24px;
       }
       ::v-deep .el-button {
-        margin-top: 24px;
+        margin-bottom: 12px;
         color: @common-color;
         border-color: @common-color;
-        margin-right: 24px;
         .iconfont {
           font-size: 14px;
           margin-left: 4px;
@@ -177,11 +157,11 @@ export default class AlbumDetail extends Vue {
       }
       .author,
       .company,
-      .create-time,
-      .description {
+      .create-time {
         padding: 6px 0;
       }
       .description {
+        margin-top: 6px;
         text-overflow: -o-ellipsis-lastline;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -191,13 +171,6 @@ export default class AlbumDetail extends Vue {
         -webkit-box-orient: vertical;
       }
     }
-  }
-  .module-title {
-    font-size: 20px;
-    color: #333;
-    font-weight: bold;
-    padding: 12px 0;
-    margin-top: 48px;
   }
 
   .module-title:nth-child(2) {

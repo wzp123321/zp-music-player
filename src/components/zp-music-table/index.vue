@@ -43,7 +43,7 @@
       </el-table-column>
       <el-table-column label="时长" align="center">
         <template slot-scope="scope">
-          {{ formatDuration(scope.row.dt || scope.row.duration) }}
+          {{ formatDuration(scope.row.dt || scope.row.duration, 1000) }}
         </template>
       </el-table-column>
     </el-table>
@@ -59,12 +59,13 @@
   </div>
 </template>
 <script lang="ts">
-import { Vue, Component, Prop } from 'vue-property-decorator'
+import { Vue, Component, Prop, Mixins } from 'vue-property-decorator'
+import commonFnMixins from '@/utils/mixins'
 
 @Component({
   name: 'MusicTable'
 })
-export default class MusicTable extends Vue {
+export default class MusicTable extends Mixins(commonFnMixins) {
   @Prop({ default: [] })
   private musicList!: MusicModule.SongInfo[]
   @Prop({
@@ -73,13 +74,6 @@ export default class MusicTable extends Vue {
     }
   })
   private pagination!: { page: number; total: number }
-  // 格式化时长
-  formatDuration(time: any) {
-    if (!time) {
-      return '00:00'
-    }
-    return (this as any).$formatDuration(time, 1000)
-  }
   // 双击事件
   handleRowDbClick(row: any, column: any, event: any) {
     this.musicList.forEach((item, index) => {
@@ -88,13 +82,6 @@ export default class MusicTable extends Vue {
         this.$store.dispatch('music/setCurrentMusicIndex', index)
       }
     })
-  }
-  // 处理歌手名
-  getArtist(list: any) {
-    const names = list.map((item: any) => {
-      return item.name
-    })
-    return names.join('/')
   }
   // 分页
   handleCurrentChange(page: number) {

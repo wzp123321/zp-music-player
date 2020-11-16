@@ -22,20 +22,28 @@
     ></el-slider>
 
     <!-- 歌曲信息 -->
-    <div class="music-player-avatar flex">
-      <img
+    <div :class="{ 'music-player-avatar': true, flex: true, playing: playing }">
+      <zp-image-preview
+        :width="54"
+        :height="54"
+        borderRadius="50%"
+        :imgUrl="musicInfo.al.picUrl"
         v-if="musicInfo.al && musicInfo.al.picUrl"
-        :src="musicInfo.al.picUrl"
         alt
-      />
-      <img
+      ></zp-image-preview>
+      <zp-image-preview
+        :width="54"
+        :height="54"
+        borderRadius="50%"
+        :imgUrl="musicInfo.artists[0].img1v1Url"
         v-if="musicInfo.artists && musicInfo.artists[0].img1v1Url"
-        :src="musicInfo.artists[0].img1v1Url"
         alt
-      />
+      ></zp-image-preview>
       <div class="info">
-        <div>{{ musicInfo.name || '' }}</div>
-        <div>{{ getArtist(musicInfo.ar) }}</div>
+        <div class="music-name">
+          {{ musicInfo.name || '' }}
+          <span class="artists">{{ getArtist(musicInfo.ar) }}</span>
+        </div>
         <div v-if="duration">
           {{ formatDuration(progress) }}/{{ formatDuration(duration) }}
         </div>
@@ -58,13 +66,14 @@
   </div>
 </template>
 <script lang="ts">
-import { Vue, Component, Watch } from 'vue-property-decorator'
+import { Vue, Component, Watch, Mixins } from 'vue-property-decorator'
 import { MusicApi } from '@/service/modules/index'
+import commonFnMixins from '@/utils/mixins'
 
 @Component({
   name: 'MusicPlayer'
 })
-export default class MusicPlayer extends Vue {
+export default class MusicPlayer extends Mixins(commonFnMixins) {
   // 播放链接
   private src = ''
   // 是否在播放
@@ -77,19 +86,6 @@ export default class MusicPlayer extends Vue {
   private duration = 0
   // 是否处于拖动进度条状态
   private isDrag = false
-  getArtist(list: UserModule.ArtistInfo[]) {
-    if (!list) {
-      return ''
-    }
-    const names = list.map(item => {
-      return item.name
-    })
-    return names.join('/')
-  }
-  // 格式化
-  formatDuration(time: number) {
-    return (this as any).$formatDuration(time)
-  }
   // 鼠标按下
   onMouseDown() {
     this.isDrag = true
@@ -235,13 +231,24 @@ export default class MusicPlayer extends Vue {
       font-size: 0.8rem;
       padding-left: 0.5rem;
       text-align: left;
+      .music-name {
+        font-size: 16px;
+        margin-bottom: 12px;
+        .artists {
+          font-size: 12px;
+          color: #666;
+        }
+      }
       div {
         line-height: 1.2rem;
       }
     }
-    img {
-      width: 3rem;
-      height: 3rem;
+  }
+  .playing {
+    ::v-deep .image-preview {
+      img {
+        animation: avatar-rotate 8s linear infinite;
+      }
     }
   }
   &-btn {
@@ -293,6 +300,16 @@ export default class MusicPlayer extends Vue {
       position: relative;
       top: 0.5rem;
     }
+  }
+}
+
+// 正在播放动画
+@keyframes avatar-rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
   }
 }
 </style>

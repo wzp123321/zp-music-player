@@ -19,6 +19,9 @@ const routes: Array<RouteConfig> = [
       {
         path: '/app/discovery',
         name: 'Dashboard',
+        meta: {
+          name: '发现音乐'
+        },
         component: () =>
           import(
             /* webpackChunkName: "music-player-dashboard" */ '@/views/pages/discover/index.vue'
@@ -28,6 +31,9 @@ const routes: Array<RouteConfig> = [
       {
         path: '/app/rank',
         name: 'Rank',
+        meta: {
+          name: '排行榜'
+        },
         component: () =>
           import(
             /* webpackChunkName: "music-player-rank" */ '@/views/pages/rank/index.vue'
@@ -37,6 +43,9 @@ const routes: Array<RouteConfig> = [
       {
         path: '/app/playlist',
         name: 'PlayList',
+        meta: {
+          name: '歌单'
+        },
         component: () =>
           import(
             /* webpackChunkName: "music-player-playlist" */ '@/views/pages/playlist/index.vue'
@@ -46,6 +55,9 @@ const routes: Array<RouteConfig> = [
       {
         path: '/app/artist',
         name: 'Artist',
+        meta: {
+          name: '歌手'
+        },
         component: () =>
           import(
             /* webpackChunkName: "music-player-artist" */ '@/views/pages/artist/index.vue'
@@ -55,6 +67,9 @@ const routes: Array<RouteConfig> = [
       {
         path: '/app/mv',
         name: 'Mv',
+        meta: {
+          name: 'mv'
+        },
         component: () =>
           import(
             /* webpackChunkName: "music-player-mv" */ '@/views/pages/mv/index.vue'
@@ -64,6 +79,9 @@ const routes: Array<RouteConfig> = [
       {
         path: '/app/search',
         name: 'Search',
+        meta: {
+          name: '搜索'
+        },
         component: () =>
           import(
             /* webpackChunkName: "music-player-search" */ '@/views/pages/search/index.vue'

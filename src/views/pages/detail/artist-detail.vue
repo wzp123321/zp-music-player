@@ -29,12 +29,13 @@
   </div>
 </template>
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator'
+import { Vue, Component, Mixins } from 'vue-property-decorator'
 import ArtistApi from '@/service/modules/artist'
+import commonFnMixins from '@/utils/mixins'
 @Component({
   name: 'ArtistDetail'
 })
-export default class ArtistDetail extends Vue {
+export default class ArtistDetail extends Mixins(commonFnMixins) {
   private loading = false
   private artistInfo: any = {}
   // 简短介绍
