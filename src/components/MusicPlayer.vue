@@ -173,6 +173,7 @@ export default class MusicPlayer extends Mixins(commonFnMixins) {
           this.src = res.data[0].url
           this.playing = true
         } else {
+          this.audioPlayer.pause()
           this.playing = false
           this.$message.error('当前歌曲暂时不可播放')
         }

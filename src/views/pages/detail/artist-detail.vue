@@ -58,6 +58,7 @@ export default class ArtistDetail extends Mixins(commonFnMixins) {
         this.hotSong = res.introduction[0].txt
         this.showExperience = res.introduction[1].txt
         this.honorRecord = res.introduction[2].txt
+        this.setDocumentTitle(this.artistInfo.mainTitle)
         this.loading = false
       }
     } catch (error) {

@@ -108,7 +108,7 @@ export default class AlbumDetail extends Mixins(commonFnMixins) {
       if (res) {
         this.albumInfo = res.album
         this.musicList = res.songs
-        document.title = this.albumInfo.name
+        this.setDocumentTitle(this.albumInfo.name)
       }
     } catch (error) {
       this.loading = false

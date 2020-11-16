@@ -145,10 +145,10 @@ export default class PlayListDetail extends Mixins(commonFnMixins) {
       const res = await PlayListApi.getPlayListDetailById({ id })
       if (res) {
         this.playListInfo = res.playlist
+        this.setDocumentTitle(this.playListInfo.name)
         const idArr = res.playlist.trackIds.map((item: any) => {
           return item.id
         })
-        document.title = this.playListInfo.name
         const ids = idArr.join(',')
         this.getMusicListByTrackIds(ids)
       }

@@ -46,6 +46,14 @@
           {{ formatDuration(scope.row.dt || scope.row.duration, 1000) }}
         </template>
       </el-table-column>
+      <el-table-column align="center" width="80">
+        <template slot-scope="scope">
+          <i class="iconfont icon-tianjia">{{
+            addMusixToPlaylist(scope.row.id)
+          }}</i>
+          <i class="iconfont icon-z" @click="play(scope.row.id)"></i>
+        </template>
+      </el-table-column>
     </el-table>
     <el-pagination
       v-if="pagination.total > 10"
@@ -76,8 +84,12 @@ export default class MusicTable extends Mixins(commonFnMixins) {
   private pagination!: { page: number; total: number }
   // 双击事件
   handleRowDbClick(row: any, column: any, event: any) {
+    this.play(row.id)
+  }
+  // 播放
+  play(id: number) {
     this.musicList.forEach((item, index) => {
-      if (item.id === row.id) {
+      if (item.id === id) {
         this.$store.dispatch('music/setCurrentMusicList', this.musicList)
         this.$store.dispatch('music/setCurrentMusicIndex', index)
       }
@@ -87,11 +99,21 @@ export default class MusicTable extends Mixins(commonFnMixins) {
   handleCurrentChange(page: number) {
     this.$emit('handleCurrentChange', page)
   }
+  // 添加歌曲到自己的歌单
+  addMusixToPlaylist(id: number) {
+    console.log(id)
+  }
 }
 </script>
 <style lang="less" scoped>
 ::v-deep .el-table,
 ::v-deep .el-pagination {
   cursor: pointer;
+}
+.iconfont {
+  font-size: 20px;
+}
+.icon-z {
+  margin-left: 12px;
 }
 </style>
