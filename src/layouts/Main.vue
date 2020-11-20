@@ -126,6 +126,10 @@ export default class Main extends Vue {
       flex: 1;
     }
   }
+
+  ::v-deep .el-drawer__body {
+    height: 100%;
+  }
   .play-history {
     height: 100%;
     display: flex;
