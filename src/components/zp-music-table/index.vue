@@ -48,12 +48,14 @@
       </el-table-column>
       <el-table-column align="center" width="80">
         <template slot-scope="scope">
-          <transition name="add_music">
-            <i class="iconfont icon-tianjia" v-show="addShow"></i>
-          </transition>
-          <i class="iconfont icon-tianjia">{{
-            addMusixToPlaylist(scope.row.id)
-          }}</i>
+          <i
+            class="iconfont icon-tianjia"
+            @click="
+              e => {
+                addMusixToPlaylist(e, scope.row.id)
+              }
+            "
+          ></i>
           <i class="iconfont icon-z" @click="play(scope.row.id)"></i>
         </template>
       </el-table-column>
@@ -85,8 +87,6 @@ export default class MusicTable extends Mixins(commonFnMixins) {
     }
   })
   private pagination!: { page: number; total: number }
-  // 点击添加icon显示控制
-  private addShow = false
   // 双击事件
   handleRowDbClick(row: any, column: any, event: any) {
     this.play(row.id)
@@ -105,8 +105,15 @@ export default class MusicTable extends Mixins(commonFnMixins) {
     this.$emit('handleCurrentChange', page)
   }
   // 添加歌曲到自己的歌单
-  addMusixToPlaylist(id: number) {
-    console.log(id)
+  addMusixToPlaylist(e: any, id: number) {
+    const targetX = document.body.clientWidth / 2 + 55
+    const targetY = document.body.clientHeight + 30
+    ;(this as any).bus.$emit('onPlayIcon', {
+      originX: e.pageX,
+      originY: e.pageY,
+      targetX,
+      targetY
+    })
   }
 }
 </script>
@@ -114,19 +121,6 @@ export default class MusicTable extends Mixins(commonFnMixins) {
 ::v-deep .el-table,
 ::v-deep .el-pagination {
   cursor: pointer;
-}
-::v-deep .el-table {
-  .el-table__row {
-    position: relative;
-    .add_music {
-      .iconfont-add {
-        transform: scale(1.5);
-        position: absolute;
-        top: 42px;
-        left: 16px;
-      }
-    }
-  }
 }
 .iconfont {
   font-size: 20px;

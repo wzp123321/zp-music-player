@@ -32,6 +32,14 @@
         </div>
       </div>
     </el-drawer>
+    <!-- 添加播放icon -->
+    <div
+      class="add_music"
+      :style="{ top: x + 'px', left: y + 'px' }"
+      v-if="addShow"
+    >
+      <i class="iconfont icon-z"></i>
+    </div>
   </div>
 </template>
 <script lang="ts">
@@ -60,6 +68,9 @@ export default class Main extends Vue {
   private historyVisiable = false
   // 视频类型
   private mvType = 'mv'
+  private addShow = false
+  private x = 0
+  private y = 0
   //添加mv播放弹框监听事件
   onMvDialogShow() {
     ;(this as any).bus.$on(
@@ -81,10 +92,35 @@ export default class Main extends Vue {
       this.historyVisiable = true
     })
   }
+  // 监听播放icon动画
+  private onPlayIconTransition() {
+    ;(this as any).bus.$on(
+      'onPlayIcon',
+      (data: {
+        originX: number
+        originY: number
+        targetX: number
+        targetY: number
+      }) => {
+        const { originX, originY, targetX, targetY } = data
+        this.x = originY - 16
+        this.y = originX - 16
+        this.addShow = true
+        setTimeout(() => {
+          this.x = targetY - 24
+          this.y = targetX - 24
+          // setTimeout(() => {
+          //   this.addShow = false
+          // }, 2600)
+        }, 200)
+      }
+    )
+  }
   created() {
     this.$nextTick(() => {
       this.onMvDialogShow()
       this.onPlayhHistoryDrawer()
+      this.onPlayIconTransition()
     })
   }
   get historyMusicList(): MusicModule.SongInfo[] {
@@ -93,6 +129,8 @@ export default class Main extends Vue {
 }
 </script>
 <style lang="less" scoped>
+@import url('../style/common.less');
+
 .music-container {
   position: relative;
   width: 100%;
@@ -145,6 +183,19 @@ export default class Main extends Vue {
     .list {
       flex: 1;
       overflow-y: scroll;
+    }
+  }
+  .add_music {
+    z-index: 9999;
+    position: absolute;
+    padding: 2px;
+    border: 2px solid @common-color;
+    border-radius: 50%;
+    transition: left 2.6s linear, top 2.6s cubic-bezier(0.5, -0.5, 1, 1);
+    .iconfont {
+      color: @common-color;
+      font-weight: bold;
+      font-size: 24px;
     }
   }
 }
