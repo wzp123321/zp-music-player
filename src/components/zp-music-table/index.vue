@@ -1,6 +1,6 @@
 <template>
   <div class="zp-Musictable">
-    <el-table :data="musicList" @row-dblclick="handleRowDbClick">
+    <el-table :data="musicList">
       <el-table-column type="index"> </el-table-column>
       <el-table-column>
         <template slot-scope="scope">
@@ -86,10 +86,6 @@ export default class MusicTable extends Mixins(commonFnMixins) {
     }
   })
   private pagination!: { page: number; total: number }
-  // 双击事件
-  handleRowDbClick(row: any, column: any, event: any) {
-    this.play(event, row.id)
-  }
   // 播放
   play(e: any, id: number) {
     const musicInfo = this.$store.state.music.musicInfo

@@ -170,6 +170,9 @@ export default class Main extends Vue {
   ::v-deep .el-drawer__body {
     height: 100%;
   }
+  ::v-deep .el-drawer:focus {
+    outline: none;
+  }
   .play-history {
     height: 100%;
     display: flex;
