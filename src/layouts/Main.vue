@@ -44,7 +44,6 @@
 </template>
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'
-
 import Header from '@/layouts/Header.vue'
 import LeftSide from '@/layouts/LeftSide.vue'
 import RightSide from '@/layouts/RightSide.vue'
@@ -102,6 +101,9 @@ export default class Main extends Vue {
         targetX: number
         targetY: number
       }) => {
+        if (this.addShow) {
+          ;(this.$message as any).error('您操作的太快了，人家受不了了啦')
+        }
         const { originX, originY, targetX, targetY } = data
         this.x = originY - 16
         this.y = originX - 16
@@ -109,9 +111,9 @@ export default class Main extends Vue {
         setTimeout(() => {
           this.x = targetY - 24
           this.y = targetX - 24
-          // setTimeout(() => {
-          //   this.addShow = false
-          // }, 2600)
+          setTimeout(() => {
+            this.addShow = false
+          }, 3600)
         }, 200)
       }
     )
@@ -186,17 +188,29 @@ export default class Main extends Vue {
     }
   }
   .add_music {
-    z-index: 9999;
     position: absolute;
     padding: 2px;
     border: 2px solid @common-color;
     border-radius: 50%;
-    transition: left 2.6s linear, top 2.6s cubic-bezier(0.5, -0.5, 1, 1);
+    animation: icon-scale 2.6s forwards;
+    transition: left 1.6s linear, top 1.6s cubic-bezier(0.5, -0.5, 1, 1);
     .iconfont {
       color: @common-color;
       font-weight: bold;
       font-size: 24px;
     }
+  }
+}
+
+@keyframes icon-scale {
+  0% {
+    transform: scale(1);
+  }
+  99% {
+    transform: scale(0.2);
+  }
+  100% {
+    transform: scale(0);
   }
 }
 </style>

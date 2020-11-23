@@ -49,14 +49,13 @@
       <el-table-column align="center" width="80">
         <template slot-scope="scope">
           <i
-            class="iconfont icon-tianjia"
+            class="iconfont icon-z"
             @click="
               e => {
-                addMusixToPlaylist(e, scope.row.id)
+                play(e, scope.row.id)
               }
             "
           ></i>
-          <i class="iconfont icon-z" @click="play(scope.row.id)"></i>
         </template>
       </el-table-column>
     </el-table>
@@ -89,12 +88,23 @@ export default class MusicTable extends Mixins(commonFnMixins) {
   private pagination!: { page: number; total: number }
   // 双击事件
   handleRowDbClick(row: any, column: any, event: any) {
-    this.play(row.id)
+    this.play(event, row.id)
   }
   // 播放
-  play(id: number) {
+  play(e: any, id: number) {
+    const musicInfo = this.$store.state.music.musicInfo
     this.musicList.forEach((item, index) => {
       if (item.id === id) {
+        const moveY = musicInfo ? 90 : 280
+        const targetX = document.body.clientWidth / 2
+        const targetY = document.body.clientHeight
+        console.log('targetX,targetY', targetX, targetY)
+        ;(this as any).bus.$emit('onPlayIcon', {
+          originX: e.pageX,
+          originY: e.pageY,
+          targetX,
+          targetY
+        })
         this.$store.dispatch('music/setCurrentMusicList', this.musicList)
         this.$store.dispatch('music/setCurrentMusicIndex', index)
       }
@@ -103,17 +113,6 @@ export default class MusicTable extends Mixins(commonFnMixins) {
   // 分页
   handleCurrentChange(page: number) {
     this.$emit('handleCurrentChange', page)
-  }
-  // 添加歌曲到自己的歌单
-  addMusixToPlaylist(e: any, id: number) {
-    const targetX = document.body.clientWidth / 2 + 55
-    const targetY = document.body.clientHeight + 30
-    ;(this as any).bus.$emit('onPlayIcon', {
-      originX: e.pageX,
-      originY: e.pageY,
-      targetX,
-      targetY
-    })
   }
 }
 </script>

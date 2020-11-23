@@ -42,8 +42,8 @@
       <div class="info">
         <div class="music-name">
           {{ musicInfo.name || '' }}
-          <span class="artists">{{ getArtist(musicInfo.ar) }}</span>
         </div>
+        <div class="artists">{{ getArtist(musicInfo.ar) }}</div>
         <div v-if="duration">
           {{ formatDuration(progress) }}/{{ formatDuration(duration) }}
         </div>
@@ -200,7 +200,7 @@ export default class MusicPlayer extends Mixins(commonFnMixins) {
 .music-player {
   position: relative;
   height: 3rem;
-  padding: 0.3rem 0.4rem;
+  padding: 1rem 0.4rem;
   align-items: center;
   &-progress {
     position: absolute;
@@ -235,10 +235,11 @@ export default class MusicPlayer extends Mixins(commonFnMixins) {
       .music-name {
         font-size: 16px;
         margin-bottom: 12px;
-        .artists {
-          font-size: 12px;
-          color: #666;
-        }
+      }
+      .artists {
+        font-size: 12px;
+        color: #666;
+        margin-bottom: 12px;
       }
       div {
         line-height: 1.2rem;
